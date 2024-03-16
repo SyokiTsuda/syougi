@@ -1,1 +1,1 @@
-# syougi
+# syougiアプリ
