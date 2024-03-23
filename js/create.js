@@ -1,21 +1,17 @@
-function createban1(a, b){
+function createban(){
 
-	var masume = "<div id=\"ban" + a + "\" class=\"ban\">";
-	var result='';
+	let gridCell = `<div class="ban">`;
 
-	for(var i=a; i<=b; i++){
-		for(var t=11; t<=99; t++){
-			if(t % 10 == 0){
-				continue;
-			}
-			masume += "<div id=\"masu" + i + "_"+ t +"\" class=\"masu" + i + "\" data-masu" + i + "=" + t +"></div>";
-			if(t==99){
-				masume += "</div><div id=\"ban" + (i+1) + "\" class=\"ban\">";
-				result = masume.replace("<div id=\"ban" + (b+1) +"\" class=\"ban\">",'');
-			}
+	for(let i=1; i<=9; i++) {
+		gridCell += `<div class="paragraph">`;
+		for(let t=9; t>=1; t--) {
+			gridCell += `<div class="masu" data-x="${t}" data-y="${i}"></div>`;
 		}
+		gridCell += `</div>`;
 	}
-	return(result);
+
+	gridCell += `</div>`
+	return gridCell;
 }
 
 $(function() {
