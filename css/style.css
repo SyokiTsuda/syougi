@@ -19,15 +19,32 @@ html {
 	display: flex;
 }
 
-.masu1, .masu2, .masu3, .masu4, .masu5, .masu6, .masu7, .masu8, .masu {
+.masu {
 	width: 48px;
 	height: 55px;
 	box-shadow: 0 0 0 1px #000;
 	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .koma {
-	margin: 0;
+	width: 90%;
+	height: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.koma > img {
+	width: 100%;
+	height: 100%;
+}
+
+.selected {
+	background: skyblue;
 }
 
 .koma1 {
