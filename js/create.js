@@ -14,9 +14,11 @@ function createban(){
 	return gridCell;
 }
 
-function createKoma(image) {
+function createKoma(opponent, name, image) {
 	const div = document.createElement('div');
 	div.classList.add('koma');
+	div.classList.add(opponent);
+	div.classList.add(name);
 	div.innerHTML += `<img src="./images/${image}">`;
 	return div;
 }
@@ -24,18 +26,19 @@ function createKoma(image) {
 
 const container = document.getElementById('container');
 container.innerHTML += createban();
-function renderKoma(x, y, img) {
+function renderKoma(x, y, img, opponent, name) {
 	const targetElement = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-	targetElement.appendChild(createKoma(img));
+	targetElement.appendChild(createKoma(opponent, name, img));
 }
 
 
-renderKoma(5, 9, 'syougi_koma01_z_15.png');
-renderKoma(5, 8, 'syougi_koma01_z_06.png');
-renderKoma(6, 9, 'syougi_koma01_z_06.png');
-renderKoma(3, 9, 'syougi_koma01_z_07.png');
-
-
+renderKoma(5, 9, 'syougi_koma01_z_15.png', 'ally', 'gyoku');
+renderKoma(5, 8, 'syougi_koma01_z_06.png', 'ally', 'kinn');
+renderKoma(6, 9, 'syougi_koma01_z_06.png', 'ally', 'kinn');
+renderKoma(3, 9, 'syougi_koma01_z_07.png', 'ally', 'ginn');
+renderKoma(5, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
+renderKoma(6, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
+// Gsyougi_koma01_z_11.png
 
 // $(function() {
 // 	$('<p class="koma gyoku koma1 tebann"></p>').prependTo('#masu1_95');
