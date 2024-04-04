@@ -56,9 +56,11 @@
 		const $masu: string = 'masu';
 		const komas: NodeListOf<Element> = document.querySelectorAll('.koma');
 		let elem: undefined | Element = undefined;
+		let clicked: null | Element = null;
 	
 		komas.forEach(koma => {
 			koma.addEventListener('click', () => {
+				clicked = koma.parentElement;
 				if(elem !== undefined) {
 					if(elem === koma) {
 						console.log('同一の駒をクリックしました。');
@@ -69,7 +71,7 @@
 							console.log('味方の駒をクリックしました。');
 						} else {
 							console.log('敵の駒をクリックしました。');
-							// ココ
+							kaku();
 						}
 					}
 					if(elem.classList.contains($selected)) {
@@ -82,62 +84,69 @@
 				elem.classList.add($selected);		
 			});
 		});
+
+
 	
 		document.addEventListener('click', e => {
 
-			const clickedElement: HTMLElement = e.target as HTMLElement;
-			const clickedParentNode: HTMLElement = clickedElement.parentNode as HTMLElement;
-	
+			clicked = e.target as Element;
+			const clickedParentNode = clicked.parentElement as Element;
 			if(!clickedParentNode) return;
 	
 			if(!elem || clickedParentNode.classList.contains($koma)) return;
 	
-			if(!clickedElement.classList.contains($masu)) {
+			if(!clicked.classList.contains($masu)) {
 				console.log('駒を持っている状態でマス目以外の箇所をクリックしました。');
 				elem.classList.remove($selected);
 				elem = undefined;
 			}else {
 				console.log('駒を持っている状態でマス目をクリックしました。');
-				// ココ
+				kaku();
 				elem.classList.remove($selected);
 				elem = undefined;
 			}
 		});
 
-		function kaku(x: number, y: number, koma: HTMLElement): number[][] {
+		function kaku() {
+			const kaku = document.querySelectorAll('.kaku')[0];
+			const kakuParetElement = kaku.parentElement;
+			if(kakuParetElement === null) {
+				return;
+			}
 			const positions: number[][] = [];
-			let posY: number = y;
-			for(let posX = x + 1; posX <= 9; posX++) {
+			let posY: number = Number(kakuParetElement.getAttribute('data-y'));
+			for(let posX = Number(kakuParetElement.getAttribute('data-x')) + 1; posX <= 9; posX++) {
 				posY++;
 				if(posY > 9) {
 					break;
 				}
 				positions.push([posX, posY]);
 			}
-			posY = y;
-			for(let posX = x - 1; posX >= 1; posX--) {
+			posY = Number(kakuParetElement.getAttribute('data-y'));
+			for(let posX = Number(kakuParetElement.getAttribute('data-x')) - 1; posX >= 1; posX--) {
 				posY++;
 				if(posY > 9) {
 					break;
 				}
 				positions.push([posX, posY]);		
 			}
-			posY = y;
-			for(let posX = x + 1; posX <= 9; posX++) {
+			posY = Number(kakuParetElement.getAttribute('data-y'));
+			for(let posX = Number(kakuParetElement.getAttribute('data-x')) + 1; posX <= 9; posX++) {
 				posY--;
 				if(posY < 1) {
 					break;
 				}
 				positions.push([posX, posY]);	
 			}
-			posY = y;
-			for(let posX = x - 1; posX >= 1; posX--) {
+			posY = Number(kakuParetElement.getAttribute('data-y'));
+			for(let posX = Number(kakuParetElement.getAttribute('data-x')) - 1; posX >= 1; posX--) {
 				posY--;
 				if(posY < 1) {
 					break;
 				}
 				positions.push([posX, posY]);
 			}
+			console.log(elem, clicked);
 			return positions;
 		}
 	}
