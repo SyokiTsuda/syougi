@@ -15,10 +15,12 @@
 					if(elem === koma) {
 						console.log('同一の駒をクリックしました。');
 					}else {
+						// ココ
 						console.log('異なる駒をクリックしました。')
 					}
 					if(elem.classList.contains($selected)) {
 						elem.classList.remove($selected);
+						elem = undefined;
 						return;
 					}
 				}
@@ -40,11 +42,12 @@
 			if(!elem || clickedParentNode.classList.contains($koma)) return;
 	
 			if(!clickedElement.classList.contains($masu)) {
-				console.log('マス目以外の箇所をクリックしました。');
+				console.log('駒を持っている状態でマス目以外の箇所をクリックしました。');
 				elem.classList.remove($selected);
 				elem = undefined;
 			}else {
-				console.log('マス目をクリックしました。');
+				console.log('駒を持っている状態でマス目をクリックしました。');
+				// ココ
 				elem.classList.remove($selected);
 				elem = undefined;
 			}
