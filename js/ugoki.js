@@ -1,140 +1,120 @@
 'use strict';
 {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-        class Koma {
-            // placeableRange: any;
-            hu() {
-                return [[], []];
-            }
-            kaku(x, y) {
-                const positions = [];
-                let posY = y;
-                for (let posX = x + 1; posX <= 9; posX++) {
-                    posY++;
-                    if (posY > 9) {
-                        break;
-                    }
-                    positions.push([posX, posY]);
-                }
-                posY = y;
-                for (let posX = x - 1; posX >= 1; posX--) {
-                    posY++;
-                    if (posY > 9) {
-                        break;
-                    }
-                    positions.push([posX, posY]);
-                }
-                posY = y;
-                for (let posX = x + 1; posX <= 9; posX++) {
-                    posY--;
-                    if (posY < 1) {
-                        break;
-                    }
-                    positions.push([posX, posY]);
-                }
-                posY = y;
-                for (let posX = x - 1; posX >= 1; posX--) {
-                    posY--;
-                    if (posY < 1) {
-                        break;
-                    }
-                    positions.push([posX, posY]);
-                }
-                return positions;
-            }
-        }
         const $selected = 'selected';
         const $koma = 'koma';
         const $masu = 'masu';
         const komas = document.querySelectorAll('.koma');
+        const masus = document.querySelectorAll('.masu');
         let elem = undefined;
-        let clicked = null;
+        let clickablePos = null;
         komas.forEach(koma => {
             koma.addEventListener('click', () => {
-                clicked = koma.parentElement;
-                if (elem !== undefined) {
-                    if (elem === koma) {
-                        console.log('同一の駒をクリックしました。');
+                clickablePos = koma.parentElement;
+                if (elem === koma) {
+                    console.log('同一の駒をクリックしました。');
+                    removePlaceable();
+                }
+                else {
+                    if (((elem === null || elem === void 0 ? void 0 : elem.classList.contains('ally')) && koma.classList.contains('ally'))
+                        || ((elem === null || elem === void 0 ? void 0 : elem.classList.contains('enemy')) && koma.classList.contains('enemy'))) {
+                        console.log('味方の駒をクリックしました。');
+                        removePlaceable();
                     }
                     else {
-                        if ((elem.classList.contains('ally') && koma.classList.contains('ally'))
-                            || (elem.classList.contains('enemy') && koma.classList.contains('enemy'))) {
-                            console.log('味方の駒をクリックしました。');
-                        }
-                        else {
-                            console.log('敵の駒をクリックしました。');
-                            kaku();
-                        }
-                    }
-                    if (elem.classList.contains($selected)) {
-                        elem.classList.remove($selected);
-                        elem = undefined;
-                        return;
+                        console.log('敵の駒をクリックしました。');
+                        kaku();
+                        removePlaceable();
                     }
                 }
+                if (elem === null || elem === void 0 ? void 0 : elem.classList.contains($selected)) {
+                    elem === null || elem === void 0 ? void 0 : elem.classList.remove($selected);
+                    elem = undefined;
+                    return;
+                }
                 elem = koma;
+                kaku();
                 elem.classList.add($selected);
             });
         });
         document.addEventListener('click', e => {
-            clicked = e.target;
-            const clickedParentNode = clicked.parentElement;
-            if (!clickedParentNode)
+            clickablePos = e.target;
+            const clickablePosdParentNode = clickablePos.parentElement;
+            if (!clickablePosdParentNode)
                 return;
-            if (!elem || clickedParentNode.classList.contains($koma))
+            if (!elem || clickablePosdParentNode.classList.contains($koma))
                 return;
-            if (!clicked.classList.contains($masu)) {
+            if (!clickablePos.classList.contains($masu)) {
                 console.log('駒を持っている状態でマス目以外の箇所をクリックしました。');
+                removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
             }
             else {
                 console.log('駒を持っている状態でマス目をクリックしました。');
                 kaku();
+                removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
             }
         });
+        function removePlaceable() {
+            masus.forEach(masu => {
+                masu.classList.remove('placeable');
+            });
+        }
         function kaku() {
-            const kaku = document.querySelectorAll('.kaku')[0];
-            const kakuParetElement = kaku.parentElement;
-            if (kakuParetElement === null) {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kaku'))) {
                 return;
             }
+            const kakuParetElement = elem.parentElement;
             const positions = [];
-            let posY = Number(kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement.getAttribute('data-x')) + 1; posX <= 9; posX++) {
-                posY++;
-                if (posY > 9) {
+            const LDRU = [
+                [1, 1],
+                [-1, 1],
+                [1, -1],
+                [-1, -1],
+            ];
+            let posY;
+            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
+            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + 1; posX * 1 <= 9; posX = posX + 1) {
+                posY = posY + 1;
+                (_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.classList.add('placeable');
+                if (posY * 1 > 9 || ((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0])) {
                     break;
                 }
                 positions.push([posX, posY]);
             }
-            posY = Number(kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement.getAttribute('data-x')) - 1; posX >= 1; posX--) {
-                posY++;
-                if (posY > 9) {
+            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
+            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) - 1; posX * -1 <= -1; posX = posX - 1) {
+                posY = posY + 1;
+                (_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.classList.add('placeable');
+                if (posY * 1 > 9 || ((_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.children[0])) {
                     break;
                 }
                 positions.push([posX, posY]);
             }
-            posY = Number(kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement.getAttribute('data-x')) + 1; posX <= 9; posX++) {
-                posY--;
-                if (posY < 1) {
+            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
+            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + 1; posX * 1 <= 9; posX = posX + 1) {
+                posY = posY - 1;
+                (_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.classList.add('placeable');
+                if (posY * -1 > -1 || ((_f = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _f === void 0 ? void 0 : _f.children[0])) {
                     break;
                 }
                 positions.push([posX, posY]);
             }
-            posY = Number(kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement.getAttribute('data-x')) - 1; posX >= 1; posX--) {
-                posY--;
-                if (posY < 1) {
+            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
+            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) - 1; posX * -1 <= -1; posX = posX - 1) {
+                posY = posY - 1;
+                (_g = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _g === void 0 ? void 0 : _g.classList.add('placeable');
+                if (posY * -1 > -1 || ((_h = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _h === void 0 ? void 0 : _h.children[0])) {
                     break;
                 }
                 positions.push([posX, posY]);
             }
-            console.log(elem, clicked);
+            console.log(elem, clickablePos);
+            console.log(positions);
             return positions;
         }
     }

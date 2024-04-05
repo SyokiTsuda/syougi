@@ -47,6 +47,10 @@ html {
 	background: skyblue;
 }
 
+.placeable {
+	background: yellow;
+}
+
 .koma1 {
 	width: 46px;
 	height: 53px;
