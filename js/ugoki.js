@@ -64,7 +64,7 @@
             });
         }
         function kaku() {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
+            var _a, _b;
             if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kaku'))) {
                 return;
             }
@@ -76,43 +76,54 @@
                 [1, -1],
                 [-1, -1],
             ];
-            let posY;
-            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + 1; posX * 1 <= 9; posX = posX + 1) {
-                posY = posY + 1;
-                (_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.classList.add('placeable');
-                if (posY * 1 > 9 || ((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0])) {
-                    break;
+            for (let i = 0; i < LDRU.length; i++) {
+                let posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
+                for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + LDRU[i][0]; posX * LDRU[i][0] <= 4 + (5 * LDRU[i][0]); posX = posX + LDRU[i][0]) {
+                    posY = posY + LDRU[i][1];
+                    (_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.classList.add('placeable');
+                    if (posY * LDRU[i][1] > 4 + (5 * LDRU[i][1]) || ((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0])) {
+                        break;
+                    }
+                    positions.push([posX, posY]);
                 }
-                positions.push([posX, posY]);
             }
-            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) - 1; posX * -1 <= -1; posX = posX - 1) {
-                posY = posY + 1;
-                (_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.classList.add('placeable');
-                if (posY * 1 > 9 || ((_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.children[0])) {
-                    break;
-                }
-                positions.push([posX, posY]);
-            }
-            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + 1; posX * 1 <= 9; posX = posX + 1) {
-                posY = posY - 1;
-                (_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.classList.add('placeable');
-                if (posY * -1 > -1 || ((_f = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _f === void 0 ? void 0 : _f.children[0])) {
-                    break;
-                }
-                positions.push([posX, posY]);
-            }
-            posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
-            for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) - 1; posX * -1 <= -1; posX = posX - 1) {
-                posY = posY - 1;
-                (_g = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _g === void 0 ? void 0 : _g.classList.add('placeable');
-                if (posY * -1 > -1 || ((_h = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _h === void 0 ? void 0 : _h.children[0])) {
-                    break;
-                }
-                positions.push([posX, posY]);
-            }
+            // let posY: number;
+            // posY = Number(kakuParetElement?.getAttribute('data-y'));
+            // for(let posX = Number(kakuParetElement?.getAttribute('data-x')) + 1; posX * 1 <= 4 + (5 * 1); posX = posX + 1) {
+            // 	posY = posY + 1;
+            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+            // 	if(posY * 1 > 4 + (5 * 1) || document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+            // 		break;
+            // 	}
+            // 	positions.push([posX, posY]);
+            // }
+            // posY = Number(kakuParetElement?.getAttribute('data-y'));
+            // for(let posX = Number(kakuParetElement?.getAttribute('data-x')) - 1; posX * -1 <= 4 + (5 * -1); posX = posX - 1) {
+            // 	posY = posY + 1;
+            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+            // 	if(posY * 1 > 4 + (5 * 1) || document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+            // 		break;
+            // 	}
+            // 	positions.push([posX, posY]);
+            // }
+            // posY = Number(kakuParetElement?.getAttribute('data-y'));
+            // for(let posX = Number(kakuParetElement?.getAttribute('data-x')) + 1; posX * 1 <= 4 + (5 * 1); posX = posX + 1) {
+            // 	posY = posY - 1;
+            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+            // 	if(posY * -1 > 4 + (5 * -1) || document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+            // 		break;
+            // 	}
+            // 	positions.push([posX, posY]);	
+            // }
+            // posY = Number(kakuParetElement?.getAttribute('data-y'));
+            // for(let posX = Number(kakuParetElement?.getAttribute('data-x')) - 1; posX * -1 <= 4 + (5 * -1); posX = posX - 1) {
+            // 	posY = posY - 1;
+            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+            // 	if(posY * -1 > 4 + (5 * -1) || document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+            // 		break;
+            // 	}
+            // 	positions.push([posX, posY]);
+            // }
             console.log(elem, clickablePos);
             console.log(positions);
             return positions;
