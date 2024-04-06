@@ -39,6 +39,7 @@ renderKoma(3, 9, 'syougi_koma01_z_07.png', 'ally', 'ginn');
 renderKoma(5, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
 renderKoma(7, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
 renderKoma(5, 3, 'syougi_koma01_z_02.png', 'ally', 'kaku')
+renderKoma(3, 5, 'syougi_koma01_z_13.png', 'ally', 'hu')
 // Gsyougi_koma01_z_11.png
 
 // $(function() {

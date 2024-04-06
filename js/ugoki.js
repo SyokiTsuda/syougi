@@ -64,7 +64,7 @@
             });
         }
         function kaku() {
-            var _a, _b;
+            var _a, _b, _c, _d, _e;
             if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kaku'))) {
                 return;
             }
@@ -80,11 +80,22 @@
                 let posY = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-y'));
                 for (let posX = Number(kakuParetElement === null || kakuParetElement === void 0 ? void 0 : kakuParetElement.getAttribute('data-x')) + LDRU[i][0]; posX * LDRU[i][0] <= 4 + (5 * LDRU[i][0]); posX = posX + LDRU[i][0]) {
                     posY = posY + LDRU[i][1];
-                    (_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.classList.add('placeable');
-                    if (posY * LDRU[i][1] > 4 + (5 * LDRU[i][1]) || ((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0])) {
+                    if ((_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.children[0]) {
+                        if ((((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0].classList.contains('ally'))
+                            && elem.classList.contains('ally'))
+                            || ((_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.children[0].classList.contains('enemy'))
+                                && elem.classList.contains('enemy')) {
+                            break;
+                        }
+                    }
+                    (_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.classList.add('placeable');
+                    if (posY * LDRU[i][1] > 4 + (5 * LDRU[i][1])) {
                         break;
                     }
                     positions.push([posX, posY]);
+                    if ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0]) {
+                        break;
+                    }
                 }
             }
             // let posY: number;

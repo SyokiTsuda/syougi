@@ -91,11 +91,23 @@
 				let posY: number = Number(kakuParetElement?.getAttribute('data-y'));
 				for(let posX = Number(kakuParetElement?.getAttribute('data-x')) + LDRU[i][0]; posX * LDRU[i][0] <= 4 + (5 * LDRU[i][0]); posX = posX + LDRU[i][0]) {
 					posY = posY + LDRU[i][1];
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+						&& elem.classList.contains('ally'))
+						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+						&& elem.classList.contains('enemy')
+						) {
+							break;
+						}
+					}
 					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-					if(posY * LDRU[i][1] > 4 + (5 * LDRU[i][1]) || document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+					if(posY * LDRU[i][1] > 4 + (5 * LDRU[i][1])) {
 						break;
 					}
 					positions.push([posX, posY]);
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+						break;
+					}
 				}
 			}
 			// let posY: number;
