@@ -122,7 +122,7 @@
 			const y = Number(p_element?.getAttribute('data-y'));
 			
 			let positionNumber: any = x * 10 + y * 1;
-			console.log(positionNumber);
+			
 			const LDRU :any = [
 				[11, [1, 1]], [-9, [-1, 1]], [-11, [-1, -1]], [9, [1, -1]]
 			];
@@ -132,8 +132,21 @@
 					if(x === 5 + 4 * LDRU[i][1][0] || y === 5 + 4 * LDRU[i][1][1]) break;
 					let posX = Math.floor(t/10);
 					let posY = Math.floor(t - Math.floor(t/10) * 10);
-					document.querySelector(`.masu[data-x="${Math.floor(posX)}"][data-y="${posY}"]`)?.classList.add('placeable');
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+					{
+						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+						&& elem.classList.contains('ally'))
+						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+						&& elem.classList.contains('enemy')) 
+						{
+							break;
+						}
+					}
+					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
 					if(posX === 1 || posX === 9 || posY === 1 || posY === 9) break;
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+						break;
+					}
 				}
 			}
 			
