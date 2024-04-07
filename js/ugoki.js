@@ -23,8 +23,6 @@
                     }
                     else {
                         console.log('敵の駒をクリックしました。');
-                        kaku();
-                        hisya();
                         removePlaceable();
                     }
                 }
@@ -54,8 +52,7 @@
             }
             else {
                 console.log('駒を持っている状態でマス目をクリックしました。');
-                kaku();
-                hisya();
+                clickablePos.appendChild(elem);
                 removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
@@ -133,86 +130,6 @@
                         break;
                 }
             }
-            // for(let i = positionNumber; i * (1) <= 44 + 55 * (1); i = i + (10)) {
-            // 	if(i === positionNumber) continue;
-            // 	let posX = Math.floor(i/10);
-            // 	let posY = Math.floor(i - Math.floor(i/10) * 10);
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-            // 		{
-            // 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-            // 			&& elem.classList.contains('ally'))
-            // 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-            // 		&& elem.classList.contains('enemy')) 
-            // 		{
-            // 			break;
-            // 		}
-            // 	}
-            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-            // 		break;
-            // 	}
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-            // }
-            // for(let i = positionNumber; i * (1) <= 44 + 55 * (1); i = i + (1)) {
-            // 	if(i === positionNumber) continue;
-            // 	let posX = Math.floor(i/10);
-            // 	let posY = Math.floor(i - Math.floor(i/10) * 10);
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-            // 		{
-            // 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-            // 			&& elem.classList.contains('ally'))
-            // 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-            // 		&& elem.classList.contains('enemy')) 
-            // 		{
-            // 			break;
-            // 		}
-            // 	}
-            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-            // 		break;
-            // 	}
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-            // }
-            // for(let i = positionNumber; i * (-1) <= 44 + 55 * (-1); i = i + (-10)) {
-            // 	if(i === positionNumber) continue;
-            // 	let posX = Math.floor(i/10);
-            // 	let posY = Math.floor(i - Math.floor(i/10) * 10);
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-            // 		{
-            // 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-            // 			&& elem.classList.contains('ally'))
-            // 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-            // 		&& elem.classList.contains('enemy')) 
-            // 		{
-            // 			break;
-            // 		}
-            // 	}
-            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-            // 		break;
-            // 	}
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-            // }
-            // for(let i = positionNumber; i * (-1) <= 44 + 55 * (-1); i = i + (-1)) {
-            // 	if(i === positionNumber) continue;
-            // 	let posX = Math.floor(i/10);
-            // 	let posY = Math.floor(i - Math.floor(i/10) * 10);
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-            // 		{
-            // 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-            // 			&& elem.classList.contains('ally'))
-            // 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-            // 		&& elem.classList.contains('enemy')) 
-            // 		{
-            // 			break;
-            // 		}
-            // 	}
-            // 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-            // 		break;
-            // 	}
-            // 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-            // }
         }
     }
 }
