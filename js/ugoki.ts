@@ -30,7 +30,7 @@
 					} else {
 						console.log('敵の駒をクリックしました。');
 						kaku();
-						// hisya();
+						hisya();
 						removePlaceable();
 					}
 				}
@@ -42,7 +42,7 @@
 				
 				elem = koma;
 				kaku();
-				// hisya();
+				hisya();
 				elem.classList.add($selected);		
 			});
 		});
@@ -65,12 +65,13 @@
 			}else {
 				console.log('駒を持っている状態でマス目をクリックしました。');
 				kaku();
-				// hisya();
+				hisya();
 				removePlaceable();
 				elem.classList.remove($selected);
 				elem = undefined;
 			}
 		});
+
 
 		function removePlaceable(): void {
 			masus.forEach(masu => {
@@ -82,22 +83,21 @@
 			if(!elem?.classList.contains('kaku')) {
 				return;
 			}
-			const p_element = elem.parentElement;
 			
-			const x = Number(p_element?.getAttribute('data-x'));
-			const y = Number(p_element?.getAttribute('data-y'));
+			const x = Number(elem.parentElement?.getAttribute('data-x'));
+			const y = Number(elem.parentElement?.getAttribute('data-y'));
 			
-			let positionNumber: any = x * 10 + y * 1;
+			const positionNumber: any = x * 10 + y * 1;
 			
 			const LDRU :any = [
 				[11, [1, 1]], [-9, [-1, 1]], [-11, [-1, -1]], [9, [1, -1]]
 			];
 
-			for(let i = 0; i < LDRU.length; i++) {
-				for(let t = positionNumber + LDRU[i][0]; t * LDRU[i][1][0] <= 44 + 55 * LDRU[i][1][0]; t = t + LDRU[i][0]) {
-					if(x === 5 + 4 * LDRU[i][1][0] || y === 5 + 4 * LDRU[i][1][1]) break;
-					let posX = Math.floor(t/10);
-					let posY = Math.floor(t - Math.floor(t/10) * 10);
+			for(let t = 0; t < LDRU.length; t++) {
+				for(let i = positionNumber + LDRU[t][0]; i * LDRU[t][1][0] <= 44 + 55 * LDRU[t][1][0]; i = i + LDRU[t][0]) {
+					if(x === 5 + 4 * LDRU[t][1][0] || y === 5 + 4 * LDRU[t][1][1]) break;
+					let posX = Math.floor(i/10);
+					let posY = Math.floor(i - Math.floor(i/10) * 10);
 					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
 					{
 						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
@@ -115,31 +115,121 @@
 					}
 				}
 			}
-			
-			console.log(elem, clickablePos);
 		}
 
-		// function hisya() {
-		// 	if(!elem?.classList.contains('hisya')) {
-		// 		return;
-		// 	}
-		// 	const p_element = elem.parentElement;
-		// 	const positions: number[][] = [];
-		// 	let posY = Number(p_element?.getAttribute('data-y'));
-		// 	let posX = Number(p_element?.getAttribute('data-x'));
-		// 	for(let posX = Number(p_element?.getAttribute('data-x')) + 1; posX <= 9; posX++) {
-		// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-		// 	}
-		// 	for(let posY = Number(p_element?.getAttribute('data-y')) + 1; posY <= 9; posY++) {
-		// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-		// 	}
-		// 	for(let posX = Number(p_element?.getAttribute('data-x')) - 1; posX >= 1; posX--) {
-		// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-		// 	}
-		// 	for(let posY = Number(p_element?.getAttribute('data-y')) - 1; posY >= 1; posY--) {
-		// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-		// 	}
-		// }
+		function hisya() {
+			if(!elem?.classList.contains('hisya')) {
+				return;
+			}
+			const x = Number(elem.parentElement?.getAttribute('data-x'));
+			const y = Number(elem.parentElement?.getAttribute('data-y'));
+			const positionNumber: any = x * 10 + y * 1;
+			const LDRU :any = [
+				[10, 1], [1, 1], [-10, -1], [-1, -1]
+			];
+			for(let t = 0; t < LDRU.length; t++) {
+				for(let i = positionNumber; i * LDRU[t][1] <= 44 + 55 * LDRU[t][1]; i = i + LDRU[t][0]) {
+					if(i === positionNumber) continue;
+					let posX = Math.floor(i/10);
+					let posY = Math.floor(i - Math.floor(i/10) * 10);
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+						{
+						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+							&& elem.classList.contains('ally'))
+						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+						&& elem.classList.contains('enemy')) 
+						{
+							break;
+						}
+					}
+					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+						break;
+					}
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+				}
+			}
+			// for(let i = positionNumber; i * (1) <= 44 + 55 * (1); i = i + (10)) {
+			// 	if(i === positionNumber) continue;
+			// 	let posX = Math.floor(i/10);
+			// 	let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 		&& elem.classList.contains('enemy')) 
+			// 		{
+			// 			break;
+			// 		}
+			// 	}
+			// 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 		break;
+			// 	}
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// }
+			// for(let i = positionNumber; i * (1) <= 44 + 55 * (1); i = i + (1)) {
+			// 	if(i === positionNumber) continue;
+			// 	let posX = Math.floor(i/10);
+			// 	let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 		&& elem.classList.contains('enemy')) 
+			// 		{
+			// 			break;
+			// 		}
+			// 	}
+			// 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 		break;
+			// 	}
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// }
+			// for(let i = positionNumber; i * (-1) <= 44 + 55 * (-1); i = i + (-10)) {
+			// 	if(i === positionNumber) continue;
+			// 	let posX = Math.floor(i/10);
+			// 	let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 		&& elem.classList.contains('enemy')) 
+			// 		{
+			// 			break;
+			// 		}
+			// 	}
+			// 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 		break;
+			// 	}
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// }
+			// for(let i = positionNumber; i * (-1) <= 44 + 55 * (-1); i = i + (-1)) {
+			// 	if(i === positionNumber) continue;
+			// 	let posX = Math.floor(i/10);
+			// 	let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 		if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 		||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 		&& elem.classList.contains('enemy')) 
+			// 		{
+			// 			break;
+			// 		}
+			// 	}
+			// 	document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 		break;
+			// 	}
+			// 	if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// }
+		}
 	}
 }
 

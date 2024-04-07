@@ -41,7 +41,7 @@ renderKoma(7, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
 renderKoma(5, 3, 'syougi_koma01_z_02.png', 'ally', 'kaku')
 renderKoma(3, 5, 'syougi_koma01_z_13.png', 'ally', 'hu')
 renderKoma(5, 7, 'Gsyougi_koma01_z_02.png', 'enemy', 'kaku')
-renderKoma(6, 6, 'syougi_koma01_z_04.png', 'ally', 'hisya')
+renderKoma(9, 5, 'syougi_koma01_z_04.png', 'ally', 'hisya')
 renderKoma(7, 1, 'syougi_koma01_z_02.png', 'ally', 'kaku')
 
 
