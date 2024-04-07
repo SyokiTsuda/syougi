@@ -62,7 +62,9 @@
 				elem = undefined;
 			}else {
 				console.log('駒を持っている状態でマス目をクリックしました。');
-				clickablePos.appendChild(elem);
+				if(clickablePos.classList.contains('placeable')) {
+					clickablePos.appendChild(elem);
+				}
 				removePlaceable();
 				elem.classList.remove($selected);
 				elem = undefined;
