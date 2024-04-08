@@ -145,14 +145,12 @@
                         if ((((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0].classList.contains('ally'))
                             && elem.classList.contains('ally'))
                             || ((_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.children[0].classList.contains('enemy'))
-                                && elem.classList.contains('enemy')) {
+                                && elem.classList.contains('enemy'))
                             break;
-                        }
                     }
                     (_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.classList.add('placeable');
-                    if ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0]) {
+                    if ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0])
                         break;
-                    }
                     if (document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null)
                         break;
                 }

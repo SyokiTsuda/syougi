@@ -128,7 +128,7 @@
 			
 			const positionNumber: any = x * 10 + y * 1;
 			
-			const LDRU :any = [
+			const LDRU :number[][] = [
 				[11, 1], [-9, -1,], [-11, -1], [9, 1]
 			];
 			test(positionNumber,elem,LDRU);
@@ -142,7 +142,7 @@
 			const x: number = Number(elem.parentElement?.getAttribute('data-x'));
 			const y: number = Number(elem.parentElement?.getAttribute('data-y'));
 			const positionNumber: number = x * 10 + y * 1;
-			const LDRU: any = [
+			const LDRU: number[][] = [
 				[10, 1], [1, 1], [-10, -1], [-1, -1]
 			];
 			test(positionNumber,elem,LDRU);
@@ -160,15 +160,10 @@
 						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
 						&& elem.classList.contains('ally'))
 						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-						&& elem.classList.contains('enemy')) 
-						{
-							break;
-						}
+						&& elem.classList.contains('enemy')) break;
 					}
 					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-						break;
-					}
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) break;
 					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
 				}
 			}
