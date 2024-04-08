@@ -41,6 +41,7 @@
 				elem = koma;
 				kaku();
 				hisya();
+				kyou();
 				elem.classList.add($selected);		
 			});
 		});
@@ -76,6 +77,114 @@
 			masus.forEach(masu => {
 				masu.classList.remove('placeable');
 			})
+		}
+
+		function kyou() {
+			if(!elem?.classList.contains('kyou')) {
+				return;
+			}
+			const x = Number(elem.parentElement?.getAttribute('data-x'));
+			const y = Number(elem.parentElement?.getAttribute('data-y'));
+
+			const positionNumber: number = x * 10 + y * 1;
+			const LDRU: number[] = [-1, 1];
+
+			let flag: number;
+			if(elem.classList.contains('ally')) {
+				flag = LDRU[0];
+			}else if(elem.classList.contains('enemy')) {
+				flag = LDRU[1];
+			}else {
+				return;
+			}
+
+			for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + flag) {
+				if(i === positionNumber) continue;
+				let posX = Math.floor(i/10);
+				let posY = Math.floor(i - Math.floor(i/10) * 10);
+				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+				{
+					if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+					&& elem?.classList.contains('ally'))
+					||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+					&& elem?.classList.contains('enemy')) 
+					{
+						break;
+					}
+				}
+				document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) break;
+				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			}
+			// if(elem.classList.contains('ally')) {
+			// 	for(let i = positionNumber; i * (-1) <= 44 + 55 * (-1); i = i + (-1)) {
+			// 		if(i === positionNumber) continue;
+			// 		let posX = Math.floor(i/10);
+			// 		let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 			if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 			||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 			&& elem.classList.contains('enemy')) 
+			// 			{
+			// 				break;
+			// 			}
+			// 		}
+			// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 			break;
+			// 		}
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// 	}
+			// }
+			// if(elem.classList.contains('enemy')) {
+			// 	for(let i = positionNumber; i * (1) <= 44 + 55 * (1); i = i + (1)) {
+			// 		if(i === positionNumber) continue;
+			// 		let posX = Math.floor(i/10);
+			// 		let posY = Math.floor(i - Math.floor(i/10) * 10);
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+			// 		{
+			// 			if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+			// 			&& elem.classList.contains('ally'))
+			// 			||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+			// 			&& elem.classList.contains('enemy')) 
+			// 			{
+			// 				break;
+			// 			}
+			// 		}
+			// 		document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
+			// 			break;
+			// 		}
+			// 		if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+			// 	}
+			// }
+			function ugoki(faction: string) {
+				let flag: number = -1;
+				if(faction === 'ally') {
+					flag = LDRU[0];
+				}else if(faction === 'enemy') {
+					flag = LDRU[1];
+				}
+				for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + flag) {
+					if(i === positionNumber) continue;
+					let posX = Math.floor(i/10);
+					let posY = Math.floor(i - Math.floor(i/10) * 10);
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
+					{
+						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
+						&& elem?.classList.contains('ally'))
+						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
+						&& elem?.classList.contains('enemy')) 
+						{
+							break;
+						}
+					}
+					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
+					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+				}
+			}
 		}
 		
 		function kaku() {
@@ -117,13 +226,14 @@
 		}
 
 		function hisya() {
-			if(!elem?.classList.contains('hisya')) {
+			if(elem === undefined) return;
+			if(!elem.classList.contains('hisya')) {
 				return;
 			}
-			const x = Number(elem.parentElement?.getAttribute('data-x'));
-			const y = Number(elem.parentElement?.getAttribute('data-y'));
-			const positionNumber: any = x * 10 + y * 1;
-			const LDRU :any = [
+			const x: number = Number(elem.parentElement?.getAttribute('data-x'));
+			const y: number = Number(elem.parentElement?.getAttribute('data-y'));
+			const positionNumber: number = x * 10 + y * 1;
+			const LDRU :number[][] = [
 				[10, 1], [1, 1], [-10, -1], [-1, -1]
 			];
 			for(let t = 0; t < LDRU.length; t++) {
