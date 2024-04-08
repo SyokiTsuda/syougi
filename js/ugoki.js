@@ -106,7 +106,7 @@
             }
         }
         function kaku() {
-            var _a, _b, _c, _d, _e, _f, _g;
+            var _a, _b;
             if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kaku'))) {
                 return;
             }
@@ -114,33 +114,12 @@
             const y = Number((_b = elem.parentElement) === null || _b === void 0 ? void 0 : _b.getAttribute('data-y'));
             const positionNumber = x * 10 + y * 1;
             const LDRU = [
-                [11, [1, 1]], [-9, [-1, 1]], [-11, [-1, -1]], [9, [1, -1]]
+                [11, 1], [-9, -1,], [-11, -1], [9, 1]
             ];
-            for (let t = 0; t < LDRU.length; t++) {
-                for (let i = positionNumber + LDRU[t][0]; i * LDRU[t][1][0] <= 44 + 55 * LDRU[t][1][0]; i = i + LDRU[t][0]) {
-                    if (x === 5 + 4 * LDRU[t][1][0] || y === 5 + 4 * LDRU[t][1][1])
-                        break;
-                    let posX = Math.floor(i / 10);
-                    let posY = Math.floor(i - Math.floor(i / 10) * 10);
-                    if ((_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.children[0]) {
-                        if ((((_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.children[0].classList.contains('ally'))
-                            && elem.classList.contains('ally'))
-                            || ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0].classList.contains('enemy'))
-                                && elem.classList.contains('enemy')) {
-                            break;
-                        }
-                    }
-                    (_f = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _f === void 0 ? void 0 : _f.classList.add('placeable');
-                    if (posX === 1 || posX === 9 || posY === 1 || posY === 9)
-                        break;
-                    if ((_g = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _g === void 0 ? void 0 : _g.children[0]) {
-                        break;
-                    }
-                }
-            }
+            test(positionNumber, elem, LDRU);
         }
         function hisya() {
-            var _a, _b, _c, _d, _e, _f, _g;
+            var _a, _b;
             if (elem === undefined)
                 return;
             if (!elem.classList.contains('hisya')) {
@@ -152,22 +131,26 @@
             const LDRU = [
                 [10, 1], [1, 1], [-10, -1], [-1, -1]
             ];
+            test(positionNumber, elem, LDRU);
+        }
+        function test(positionNumber, elem, LDRU) {
+            var _a, _b, _c, _d, _e;
             for (let t = 0; t < LDRU.length; t++) {
                 for (let i = positionNumber; i * LDRU[t][1] <= 44 + 55 * LDRU[t][1]; i = i + LDRU[t][0]) {
                     if (i === positionNumber)
                         continue;
                     let posX = Math.floor(i / 10);
                     let posY = Math.floor(i - Math.floor(i / 10) * 10);
-                    if ((_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.children[0]) {
-                        if ((((_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.children[0].classList.contains('ally'))
+                    if ((_a = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _a === void 0 ? void 0 : _a.children[0]) {
+                        if ((((_b = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _b === void 0 ? void 0 : _b.children[0].classList.contains('ally'))
                             && elem.classList.contains('ally'))
-                            || ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0].classList.contains('enemy'))
+                            || ((_c = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _c === void 0 ? void 0 : _c.children[0].classList.contains('enemy'))
                                 && elem.classList.contains('enemy')) {
                             break;
                         }
                     }
-                    (_f = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _f === void 0 ? void 0 : _f.classList.add('placeable');
-                    if ((_g = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _g === void 0 ? void 0 : _g.children[0]) {
+                    (_d = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _d === void 0 ? void 0 : _d.classList.add('placeable');
+                    if ((_e = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)) === null || _e === void 0 ? void 0 : _e.children[0]) {
                         break;
                     }
                     if (document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null)

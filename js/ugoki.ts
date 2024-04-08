@@ -129,31 +129,9 @@
 			const positionNumber: any = x * 10 + y * 1;
 			
 			const LDRU :any = [
-				[11, [1, 1]], [-9, [-1, 1]], [-11, [-1, -1]], [9, [1, -1]]
+				[11, 1], [-9, -1,], [-11, -1], [9, 1]
 			];
-
-			for(let t = 0; t < LDRU.length; t++) {
-				for(let i = positionNumber + LDRU[t][0]; i * LDRU[t][1][0] <= 44 + 55 * LDRU[t][1][0]; i = i + LDRU[t][0]) {
-					if(x === 5 + 4 * LDRU[t][1][0] || y === 5 + 4 * LDRU[t][1][1]) break;
-					let posX = Math.floor(i/10);
-					let posY = Math.floor(i - Math.floor(i/10) * 10);
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-					{
-						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-						&& elem.classList.contains('ally'))
-						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-						&& elem.classList.contains('enemy')) 
-						{
-							break;
-						}
-					}
-					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-					if(posX === 1 || posX === 9 || posY === 1 || posY === 9) break;
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) {
-						break;
-					}
-				}
-			}
+			test(positionNumber,elem,LDRU);
 		}
 
 		function hisya() {
@@ -164,18 +142,23 @@
 			const x: number = Number(elem.parentElement?.getAttribute('data-x'));
 			const y: number = Number(elem.parentElement?.getAttribute('data-y'));
 			const positionNumber: number = x * 10 + y * 1;
-			const LDRU :number[][] = [
+			const LDRU: any = [
 				[10, 1], [1, 1], [-10, -1], [-1, -1]
 			];
+			test(positionNumber,elem,LDRU);
+		}
+
+
+		function test(positionNumber: number, elem: any, LDRU: any): void {
 			for(let t = 0; t < LDRU.length; t++) {
 				for(let i = positionNumber; i * LDRU[t][1] <= 44 + 55 * LDRU[t][1]; i = i + LDRU[t][0]) {
 					if(i === positionNumber) continue;
 					let posX = Math.floor(i/10);
 					let posY = Math.floor(i - Math.floor(i/10) * 10);
 					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-						{
+					{
 						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-							&& elem.classList.contains('ally'))
+						&& elem.classList.contains('ally'))
 						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
 						&& elem.classList.contains('enemy')) 
 						{
