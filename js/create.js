@@ -34,16 +34,19 @@ function renderKoma(x, y, img, opponent, name) {
 
 renderKoma(5, 9, 'syougi_koma01_z_15.png', 'ally', 'gyoku');
 renderKoma(5, 8, 'syougi_koma01_z_06.png', 'ally', 'kinn');
-renderKoma(6, 9, 'syougi_koma01_z_06.png', 'ally', 'kinn');
-renderKoma(3, 9, 'syougi_koma01_z_07.png', 'ally', 'ginn');
-renderKoma(5, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou')
-renderKoma(1, 9, 'syougi_koma01_z_11.png', 'ally', 'kyou')
-renderKoma(5, 3, 'syougi_koma01_z_02.png', 'ally', 'kaku')
-renderKoma(3, 5, 'syougi_koma01_z_13.png', 'ally', 'hu')
-renderKoma(5, 7, 'Gsyougi_koma01_z_02.png', 'enemy', 'kaku')
-renderKoma(9, 5, 'syougi_koma01_z_04.png', 'ally', 'hisya')
-renderKoma(7, 1, 'syougi_koma01_z_02.png', 'ally', 'kaku')
-renderKoma(1, 5, 'Gsyougi_koma01_z_04.png', 'enemy', 'hisya')
+renderKoma(6, 9, 'Gsyougi_koma01_z_06.png', 'enemy', 'kinn');
+renderKoma(3, 9, 'Gsyougi_koma01_z_07.png', 'enemy', 'ginn');
+renderKoma(5, 5, 'Gsyougi_koma01_z_11.png', 'enemy', 'kyou');
+renderKoma(1, 9, 'syougi_koma01_z_11.png', 'ally', 'kyou');
+renderKoma(5, 3, 'syougi_koma01_z_02.png', 'ally', 'kaku');
+renderKoma(3, 5, 'syougi_koma01_z_13.png', 'ally', 'hu');
+renderKoma(9, 3, 'Gsyougi_koma01_z_13.png', 'enemy', 'hu');
+renderKoma(5, 7, 'Gsyougi_koma01_z_02.png', 'enemy', 'kaku');
+renderKoma(9, 5, 'syougi_koma01_z_04.png', 'ally', 'hisya');
+renderKoma(7, 1, 'syougi_koma01_z_02.png', 'ally', 'kaku');
+renderKoma(1, 5, 'Gsyougi_koma01_z_04.png', 'enemy', 'hisya');
+renderKoma(4, 3, 'Gsyougi_koma01_z_09.png', 'enemy', 'kei');
+renderKoma(7, 9, 'syougi_koma01_z_07.png', 'ally', 'ginn');
 
 
 

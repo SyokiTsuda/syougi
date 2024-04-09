@@ -7,14 +7,13 @@
 		
 
 		const $selected: string = 'selected';
+		const $placeable: string = 'placeable';
 		const $koma: string = 'koma';
 		const $masu: string = 'masu';
 		const komas: NodeListOf<Element> = document.querySelectorAll('.koma');
 		const masus: NodeListOf<Element> = document.querySelectorAll('.masu');
 		let elem: undefined | Element = undefined;
 		let clickablePos: null | Element = null;
-		let x: number;
-		let y: number;
 	
 		komas.forEach(koma => {
 			koma.addEventListener('click', () => {
@@ -24,20 +23,24 @@
 					console.log('同一の駒をクリックしました。');
 					removePlaceable();
 				}else {
-					if((elem?.classList.contains('ally') && koma.classList.contains('ally'))
-					|| (elem?.classList.contains('enemy') && koma.classList.contains('enemy'))
-					) {
-						console.log('味方の駒をクリックしました。');
-						removePlaceable();
-					} else {
-						console.log('敵の駒をクリックしました。');
-						removePlaceable();
+					if(elem !== undefined) {
+						if((elem.classList.contains('ally') && koma.classList.contains('ally'))
+						|| (elem.classList.contains('enemy') && koma.classList.contains('enemy'))
+						) {
+							console.log('味方の駒をクリックしました。');
+							removePlaceable();
+						} else {
+							console.log('敵の駒をクリックしました。');
+							removePlaceable();
+						}
 					}
 				}
-				if(elem?.classList.contains($selected)) {
-					elem?.classList.remove($selected);
-					elem = undefined;
-					return;
+				if(elem !== undefined) {
+					if(elem.classList.contains($selected)) {
+						elem.classList.remove($selected);
+						elem = undefined;
+						return;
+					}
 				}
 				
 				elem = koma;
@@ -48,6 +51,10 @@
 				kaku(positionNumber);
 				hisya(positionNumber);
 				kyou(positionNumber);
+				hu(positionNumber);
+				kei(positionNumber);
+				ginn(positionNumber);
+				kinn(positionNumber);
 				elem.classList.add($selected);		
 			});
 		});
@@ -69,7 +76,7 @@
 				elem = undefined;
 			}else {
 				console.log('駒を持っている状態でマス目をクリックしました。');
-				if(clickablePos.classList.contains('placeable')) {
+				if(clickablePos.classList.contains($placeable)) {
 					clickablePos.appendChild(elem);
 				}
 				removePlaceable();
@@ -77,73 +84,118 @@
 				elem = undefined;
 			}
 		});
-
+		
 		
 		
 		
 		function removePlaceable(): void {
 			masus.forEach(masu => {
-				masu.classList.remove('placeable');
+				masu.classList.remove($placeable);
 			})
 		}
+		
+		function hu(positionNumber: number): void {
+			if(!elem?.classList.contains('hu')) {
+				return;
+			}
+			const LDRU: number[][] = [
+				[-1, -1],
+				[1, 1]
+			];
+			test(positionNumber, elem, LDRU, false);
+		}
 
-		function kyou(positionNumber: number) {
+		function kyou(positionNumber: number): void {
 			if(!elem?.classList.contains('kyou')) {
 				return;
 			}
 			const LDRU: number[][] = [
-				[-1, -1, -1],
-				[1, 1, 1]
+				[-1, -1],
+				[1, 1]
 			];
-			test(positionNumber, elem, LDRU);
+			test(positionNumber, elem, LDRU, true);
+		}
+
+		function kei(positionNumber: number): void {
+			if(!elem?.classList.contains('kei')) {
+				return;
+			}
+			const LDRU: number[][] = [
+				[8, -1], [-12, -1],
+				[-8, 1], [12, 1]
+			];
+			test(positionNumber, elem, LDRU, false);
+		}
+
+		function ginn(positionNumber: number): void {
+			if(!elem?.classList.contains('ginn')) {
+				return;
+			}
+			const LDRU: number[][] = [
+				[9, -1], [11, -1],[-1, -1], [-11, -1],[-9, -1],
+				[-9, 1], [-11, 1],[1, 1], [11, 1],[9, 1]
+			];
+			test(positionNumber, elem, LDRU, false);
+		}
+
+		function kinn(positionNumber: number): void {
+			if(!elem?.classList.contains('kinn')) {
+				return;
+			}
+			const LDRU: number[][] = [
+				[10, -1],[9, -1],[-1, -1],[-11, -1],[-10, -1],[1, -1],
+				[-10, 1],[-9, 1],[1, 1],[11, 1],[10, 1],[-1, 1],
+			];
+			test(positionNumber, elem, LDRU, false);
 		}
 
 		
-		function kaku(positionNumber: number) {
+		function kaku(positionNumber: number): void {
 			if(!elem?.classList.contains('kaku')) {
 				return;
 			}
 			const LDRU :number[][] = [
-				[11, 1, -1], [-9, -1, -1], [-11, -1, -1], [9, 1, -1], 
-				[11, 1, 1], [-9, -1, 1], [-11, -1, 1], [9, 1, 1]
+				[11, -1], [-9, -1], [-11, -1], [9, -1], 
+				[11, 1], [-9, 1], [-11, 1], [9, 1]
 			];
-			test(positionNumber,elem,LDRU);
+			test(positionNumber,elem,LDRU, true);
 		}
 
-		function hisya(positionNumber: number) {
+		function hisya(positionNumber: number): void {
 			if(!elem?.classList.contains('hisya')) {
 				return;
 			}
 			const LDRU: number[][] = [
-				[10, 1, -1], [1, 1, -1], [-10, -1, -1], [-1, -1, -1], 
-				[10, 1, 1], [1, 1, 1], [-10, -1, 1], [-1, -1, 1],
+				[10, -1], [1, -1], [-10, -1], [-1, -1], 
+				[10, 1], [1, 1], [-10, 1], [-1, 1],
 			];
-			test(positionNumber,elem,LDRU);
+			test(positionNumber,elem,LDRU, true);
 		}
 
 
-		function test(positionNumber: number, elem: any, LDRU: any): void {
+		function test(positionNumber: number, elem: undefined | Element, LDRU: number[][], tobi: boolean): void {
 			for(let t = 0; t < LDRU.length; t++) {
-				if(elem.classList.contains('ally') && LDRU[t][2] === 1) continue;
-				if(elem.classList.contains('enemy') && LDRU[t][2] === -1) continue;	
-				for(let i = positionNumber; i * LDRU[t][1] <= 44 + 55 * LDRU[t][1]; i = i + LDRU[t][0]) {
+				const flag = LDRU[t][0] > 0 ? 1 : -1;
+				if(elem !== undefined) {
+					if(elem.classList.contains('ally') && LDRU[t][1] === 1) continue;
+					if(elem.classList.contains('enemy') && LDRU[t][1] === -1) continue;	
+				}
+				for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + LDRU[t][0]) {
 					if(i === positionNumber) continue;
 					let posX = Math.floor(i/10);
 					let posY = Math.floor(i - Math.floor(i/10) * 10);
 					let masu = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`);
-					if(masu !== null) {
+					if(masu !== null && elem !== undefined) {
 						if(masu.children[0])
 						{
-							if((masu.children[0].classList.contains('ally')
-							&& elem.classList.contains('ally'))
-							||(masu.children[0].classList.contains('enemy'))
-							&& elem.classList.contains('enemy')) break;
+							if((masu.children[0].classList.contains('ally')	&& elem.classList.contains('ally'))
+							||(masu.children[0].classList.contains('enemy')) && elem.classList.contains('enemy')) break;
 						}
-						masu.classList.add('placeable');
+						masu.classList.add($placeable);
 						if(masu.children[0]) break;
-
 					}
 					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+					if(!tobi) break;
 				}
 			}
 		}
