@@ -13,6 +13,8 @@
 		const masus: NodeListOf<Element> = document.querySelectorAll('.masu');
 		let elem: undefined | Element = undefined;
 		let clickablePos: null | Element = null;
+		let x: number;
+		let y: number;
 	
 		komas.forEach(koma => {
 			koma.addEventListener('click', () => {
@@ -39,9 +41,13 @@
 				}
 				
 				elem = koma;
-				kaku();
-				hisya();
-				kyou();
+				if(elem.parentElement === null) return;
+				const x = Number(elem.parentElement.getAttribute('data-x'));
+				const y = Number(elem.parentElement.getAttribute('data-y'));
+				const positionNumber: number = x * 10 + y * 1;
+				kaku(positionNumber);
+				hisya(positionNumber);
+				kyou(positionNumber);
 				elem.classList.add($selected);		
 			});
 		});
@@ -72,78 +78,45 @@
 			}
 		});
 
-
+		
+		
+		
 		function removePlaceable(): void {
 			masus.forEach(masu => {
 				masu.classList.remove('placeable');
 			})
 		}
 
-		function kyou() {
+		function kyou(positionNumber: number) {
 			if(!elem?.classList.contains('kyou')) {
 				return;
 			}
-			const x = Number(elem.parentElement?.getAttribute('data-x'));
-			const y = Number(elem.parentElement?.getAttribute('data-y'));
-
-			const positionNumber: number = x * 10 + y * 1;
-			const LDRU: number[] = [-1, 1];
-
-			let flag: number;
-			if(elem.classList.contains('ally')) {
-				flag = LDRU[0];
-			}else if(elem.classList.contains('enemy')) {
-				flag = LDRU[1];
-			}else {
-				return;
-			}
-
-			for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + flag) {
-				if(i === positionNumber) continue;
-				let posX = Math.floor(i/10);
-				let posY = Math.floor(i - Math.floor(i/10) * 10);
-				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-				{
-					if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-					&& elem?.classList.contains('ally'))
-					||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-					&& elem?.classList.contains('enemy')) 
-					{
-						break;
-					}
-				}
-				document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) break;
-				if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-			}
+			const LDRU: number[][] = [
+				[-1, -1, -1],
+				[1, 1, 1]
+			];
+			test(positionNumber, elem, LDRU);
 		}
+
 		
-		function kaku() {
+		function kaku(positionNumber: number) {
 			if(!elem?.classList.contains('kaku')) {
 				return;
 			}
-			
-			const x = Number(elem.parentElement?.getAttribute('data-x'));
-			const y = Number(elem.parentElement?.getAttribute('data-y'));
-			
-			const positionNumber: any = x * 10 + y * 1;
-			
 			const LDRU :number[][] = [
-				[11, 1], [-9, -1,], [-11, -1], [9, 1]
+				[11, 1, -1], [-9, -1, -1], [-11, -1, -1], [9, 1, -1], 
+				[11, 1, 1], [-9, -1, 1], [-11, -1, 1], [9, 1, 1]
 			];
 			test(positionNumber,elem,LDRU);
 		}
 
-		function hisya() {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('hisya')) {
+		function hisya(positionNumber: number) {
+			if(!elem?.classList.contains('hisya')) {
 				return;
 			}
-			const x: number = Number(elem.parentElement?.getAttribute('data-x'));
-			const y: number = Number(elem.parentElement?.getAttribute('data-y'));
-			const positionNumber: number = x * 10 + y * 1;
 			const LDRU: number[][] = [
-				[10, 1], [1, 1], [-10, -1], [-1, -1]
+				[10, 1, -1], [1, 1, -1], [-10, -1, -1], [-1, -1, -1], 
+				[10, 1, 1], [1, 1, 1], [-10, -1, 1], [-1, -1, 1],
 			];
 			test(positionNumber,elem,LDRU);
 		}
@@ -151,19 +124,25 @@
 
 		function test(positionNumber: number, elem: any, LDRU: any): void {
 			for(let t = 0; t < LDRU.length; t++) {
+				if(elem.classList.contains('ally') && LDRU[t][2] === 1) continue;
+				if(elem.classList.contains('enemy') && LDRU[t][2] === -1) continue;	
 				for(let i = positionNumber; i * LDRU[t][1] <= 44 + 55 * LDRU[t][1]; i = i + LDRU[t][0]) {
 					if(i === positionNumber) continue;
 					let posX = Math.floor(i/10);
 					let posY = Math.floor(i - Math.floor(i/10) * 10);
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0])
-					{
-						if((document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('ally')
-						&& elem.classList.contains('ally'))
-						||(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0].classList.contains('enemy'))
-						&& elem.classList.contains('enemy')) break;
+					let masu = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`);
+					if(masu !== null) {
+						if(masu.children[0])
+						{
+							if((masu.children[0].classList.contains('ally')
+							&& elem.classList.contains('ally'))
+							||(masu.children[0].classList.contains('enemy'))
+							&& elem.classList.contains('enemy')) break;
+						}
+						masu.classList.add('placeable');
+						if(masu.children[0]) break;
+
 					}
-					document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.classList.add('placeable');
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`)?.children[0]) break;
 					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
 				}
 			}
