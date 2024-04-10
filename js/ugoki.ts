@@ -4,6 +4,40 @@
 	if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 		
 
+		const komaArrs: string[][] = [
+			['ally','ou','syougi_koma01_z_01.png'],
+			['ally','kaku','syougi_koma01_z_02.png'],
+			['ally','uma','syougi_koma01_z_03.png'],
+			['ally','hisya','syougi_koma01_z_04.png'],
+			['ally','ryuu','syougi_koma01_z_05.png'],
+			['ally','kinn','syougi_koma01_z_06.png'],
+			['ally','ginn','syougi_koma01_z_07.png'],
+			['ally','nariginn','syougi_koma01_z_08.png'],
+			['ally','kei','syougi_koma01_z_09.png'],
+			['ally','narikei','syougi_koma01_z_10.png'],
+			['ally','kyou','syougi_koma01_z_11.png'],
+			['ally','narikyou','syougi_koma01_z_12.png'],
+			['ally','hu','syougi_koma01_z_13.png'],
+			['ally','tokinn','syougi_koma01_z_14.png'],
+			['ally','gyoku','syougi_koma01_z_15.png'],
+
+			['enemy','ou','Gsyougi_koma01_z_01.png'],
+			['enemy','kaku','Gsyougi_koma01_z_02.png'],
+			['enemy','uma','Gsyougi_koma01_z_03.png'],
+			['enemy','hisya','Gsyougi_koma01_z_04.png'],
+			['enemy','ryuu','Gsyougi_koma01_z_05.png'],
+			['enemy','kinn','Gsyougi_koma01_z_06.png'],
+			['enemy','ginn','Gsyougi_koma01_z_07.png'],
+			['enemy','nariginn','Gsyougi_koma01_z_08.png'],
+			['enemy','kei','Gsyougi_koma01_z_09.png'],
+			['enemy','narikei','Gsyougi_koma01_z_10.png'],
+			['enemy','kyou','Gsyougi_koma01_z_11.png'],
+			['enemy','narikyou','Gsyougi_koma01_z_12.png'],
+			['enemy','hu','Gsyougi_koma01_z_13.png'],
+			['enemy','tokinn','Gsyougi_koma01_z_14.png'],
+			['enemy','gyoku','Gsyougi_koma01_z_15.png'],
+		];
+
 		
 
 		const $selected: string = 'selected';
@@ -33,13 +67,15 @@
 							removePlaceable();
 						} else {
 							console.log('敵の駒をクリックしました。');
+							if(clickablePos === null || allyMotigoma === null || enemyMotigoma === null) return;
 							if(koma.classList.contains('enemy')) {
-								clickablePos?.appendChild(elem);
-								allyMotigoma?.appendChild(koma);
+								clickablePos.appendChild(elem);
+								allyMotigoma.appendChild(koma);
 							}else if(koma.classList.contains('ally')) {
-								clickablePos?.appendChild(elem);
-								enemyMotigoma?.appendChild(koma);
+								clickablePos.appendChild(elem);
+								enemyMotigoma.appendChild(koma);
 							}
+							insertKoma();
 							removePlaceable();
 						}
 					}
@@ -97,8 +133,19 @@
 			}
 		});
 		
+		function insertKoma() {
+			komaArrs.forEach(komaArr => {
+				komas.forEach(koma => {
+					if(koma.classList.contains(komaArr[0]) && koma.classList.contains(komaArr[1])) {
+						const img = document.createElement('img');
+						img.src = `./images/${komaArr[2]}`;
+						koma.appendChild(img);
+					}
+				});
+			});
+		}
 		
-		
+		insertKoma();
 		
 		function removePlaceable(): void {
 			masus.forEach(masu => {
