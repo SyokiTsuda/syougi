@@ -133,6 +133,9 @@
                 uma(positionNumber);
                 ryuu(positionNumber);
                 gyoku(positionNumber);
+                if (elem.classList.contains('motigoma')) {
+                    uti();
+                }
                 elem.classList.add($selected);
             });
         });
@@ -152,13 +155,17 @@
             }
             else {
                 // マス目をクリック
-                console.log(elem);
                 if (clickablePos.classList.contains($placeable)) {
                     clickablePos.appendChild(elem);
                 }
                 if (clickedKomaPos === null)
                     return;
-                komanari(clickablePos, clickedKomaPos);
+                if (!elem.classList.contains('motigoma')) {
+                    komanari(clickablePos, clickedKomaPos);
+                }
+                else {
+                    elem.classList.remove('motigoma');
+                }
                 insertKoma();
                 removePlaceable();
                 flag = 0;
@@ -308,11 +315,20 @@
             ];
             test(positionNumber, elem, LDRU);
         }
+        function uti() {
+            masus.forEach(masu => {
+                if (masu.children[0] === undefined) {
+                    masu.classList.add($placeable);
+                }
+            });
+        }
         function komanari(clickablePos, clickedKomaPos) {
-            const clickable_y = Number(clickablePos.getAttribute('data-y'));
-            const clicked_y = Number(clickedKomaPos.getAttribute('data-y'));
             if (elem === undefined)
                 return;
+            if (elem.classList.contains('motigoma'))
+                return;
+            const clickable_y = Number(clickablePos.getAttribute('data-y'));
+            const clicked_y = Number(clickedKomaPos.getAttribute('data-y'));
             if (elem.classList.contains('hu')) {
                 if (clickable_y >= 2 && clickable_y <= 3 && elem.classList.contains('ally')) {
                     if (!confirm('成りますか?'))
