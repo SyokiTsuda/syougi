@@ -87,6 +87,7 @@
                                     }
                                 }
                             }
+                            komanari(clickablePos);
                             insertKoma();
                             removePlaceable();
                         }
@@ -136,6 +137,8 @@
                 if (clickablePos.classList.contains($placeable)) {
                     clickablePos.appendChild(elem);
                 }
+                komanari(clickablePos);
+                insertKoma();
                 removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
@@ -262,6 +265,75 @@
                 [-11, 1, 0], [-10, 1, 0], [-9, 1, 0], [1, 1, 0], [11, 1, 0], [10, 1, 0], [9, 1, 0], [-1, 1, 0],
             ];
             test(positionNumber, elem, LDRU);
+        }
+        function komanari(clickablePos) {
+            const y = Number(clickablePos.getAttribute('data-y'));
+            if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('hu')) {
+                if (y >= 2 && y <= 3 && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('hu');
+                    elem.classList.add('tokinn');
+                }
+                else if (y === 1 && elem.classList.contains('ally')) {
+                    elem.classList.remove('hu');
+                    elem.classList.add('tokinn');
+                }
+                else if (y >= 7 && y <= 8 && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('hu');
+                    elem.classList.add('tokinn');
+                }
+                else if (y === 9 && elem.classList.contains('enemy')) {
+                    elem.classList.remove('hu');
+                    elem.classList.add('tokinn');
+                }
+            }
+            else if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('kyou')) {
+                if (y >= 2 && y <= 3 && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kyou');
+                    elem.classList.add('narikyou');
+                }
+                else if (y === 1 && elem.classList.contains('ally')) {
+                    elem.classList.remove('kyou');
+                    elem.classList.add('narikyou');
+                }
+                else if (y >= 7 && y <= 8 && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kyou');
+                    elem.classList.add('narikyou');
+                }
+                else if (y === 9 && elem.classList.contains('enemy')) {
+                    elem.classList.remove('kyou');
+                    elem.classList.add('narikyou');
+                }
+            }
+            else if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('kei')) {
+                if (y === 3 && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kei');
+                    elem.classList.add('narikei');
+                }
+                else if (y >= 2 && y <= 1 && elem.classList.contains('ally')) {
+                    elem.classList.remove('kei');
+                    elem.classList.add('narikei');
+                }
+                else if (y === 7 && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kei');
+                    elem.classList.add('narikei');
+                }
+                else if (y >= 8 && y <= 9 && elem.classList.contains('enemy')) {
+                    elem.classList.remove('kei');
+                    elem.classList.add('narikei');
+                }
+            }
         }
         function test(positionNumber, elem, LDRU) {
             for (let t = 0; t < LDRU.length; t++) {
