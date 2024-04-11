@@ -5,37 +5,37 @@
 		
 
 		const komaArrs: string[][] = [
-			['ally','ou','syougi_koma01_z_01.png'],
-			['ally','kaku','syougi_koma01_z_02.png'],
-			['ally','uma','syougi_koma01_z_03.png'],
-			['ally','hisya','syougi_koma01_z_04.png'],
-			['ally','ryuu','syougi_koma01_z_05.png'],
-			['ally','kinn','syougi_koma01_z_06.png'],
-			['ally','ginn','syougi_koma01_z_07.png'],
-			['ally','nariginn','syougi_koma01_z_08.png'],
-			['ally','kei','syougi_koma01_z_09.png'],
-			['ally','narikei','syougi_koma01_z_10.png'],
-			['ally','kyou','syougi_koma01_z_11.png'],
-			['ally','narikyou','syougi_koma01_z_12.png'],
-			['ally','hu','syougi_koma01_z_13.png'],
-			['ally','tokinn','syougi_koma01_z_14.png'],
-			['ally','gyoku','syougi_koma01_z_15.png'],
+			['ally','ou', 'ou', 'syougi_koma01_z_01.png'],
+			['ally','kaku', 'kaku', 'syougi_koma01_z_02.png'],
+			['ally','uma','kaku','syougi_koma01_z_03.png'],
+			['ally','hisya','hisya','syougi_koma01_z_04.png'],
+			['ally','ryuu','hisya','syougi_koma01_z_05.png'],
+			['ally','kinn','kinn','syougi_koma01_z_06.png'],
+			['ally','ginn','ginn','syougi_koma01_z_07.png'],
+			['ally','nariginn','ginn','syougi_koma01_z_08.png'],
+			['ally','kei','kei','syougi_koma01_z_09.png'],
+			['ally','narikei','kei','syougi_koma01_z_10.png'],
+			['ally','kyou','kyou','syougi_koma01_z_11.png'],
+			['ally','narikyou','kyou','syougi_koma01_z_12.png'],
+			['ally','hu','hu','syougi_koma01_z_13.png'],
+			['ally','tokinn','hu','syougi_koma01_z_14.png'],
+			['ally','gyoku','gyoku','syougi_koma01_z_15.png'],
 
-			['enemy','ou','Gsyougi_koma01_z_01.png'],
-			['enemy','kaku','Gsyougi_koma01_z_02.png'],
-			['enemy','uma','Gsyougi_koma01_z_03.png'],
-			['enemy','hisya','Gsyougi_koma01_z_04.png'],
-			['enemy','ryuu','Gsyougi_koma01_z_05.png'],
-			['enemy','kinn','Gsyougi_koma01_z_06.png'],
-			['enemy','ginn','Gsyougi_koma01_z_07.png'],
-			['enemy','nariginn','Gsyougi_koma01_z_08.png'],
-			['enemy','kei','Gsyougi_koma01_z_09.png'],
-			['enemy','narikei','Gsyougi_koma01_z_10.png'],
-			['enemy','kyou','Gsyougi_koma01_z_11.png'],
-			['enemy','narikyou','Gsyougi_koma01_z_12.png'],
-			['enemy','hu','Gsyougi_koma01_z_13.png'],
-			['enemy','tokinn','Gsyougi_koma01_z_14.png'],
-			['enemy','gyoku','Gsyougi_koma01_z_15.png'],
+			['enemy','ou','ou', 'Gsyougi_koma01_z_01.png'],
+			['enemy','kaku','kaku', 'Gsyougi_koma01_z_02.png'],
+			['enemy','uma','kaku', 'Gsyougi_koma01_z_03.png'],
+			['enemy','hisya','hisya', 'Gsyougi_koma01_z_04.png'],
+			['enemy','ryuu','hisya', 'Gsyougi_koma01_z_05.png'],
+			['enemy','kinn','kinn', 'Gsyougi_koma01_z_06.png'],
+			['enemy','ginn','ginn', 'Gsyougi_koma01_z_07.png'],
+			['enemy','nariginn','ginn', 'Gsyougi_koma01_z_08.png'],
+			['enemy','kei','kei', 'Gsyougi_koma01_z_09.png'],
+			['enemy','narikei','kei', 'Gsyougi_koma01_z_10.png'],
+			['enemy','kyou','kyou', 'Gsyougi_koma01_z_11.png'],
+			['enemy','narikyou','kyou', 'Gsyougi_koma01_z_12.png'],
+			['enemy','hu','hu', 'Gsyougi_koma01_z_13.png'],
+			['enemy','tokinn','hu', 'Gsyougi_koma01_z_14.png'],
+			['enemy','gyoku','gyoku', 'Gsyougi_koma01_z_15.png'],
 		];
 
 		
@@ -56,24 +56,41 @@
 				clickablePos = koma.parentElement;
 				
 				if(elem === koma) {
-					console.log('同一の駒をクリックしました。');
+					// 同一の駒クリック
 					removePlaceable();
 				}else {
 					if(elem !== undefined) {
 						if((elem.classList.contains('ally') && koma.classList.contains('ally'))
 						|| (elem.classList.contains('enemy') && koma.classList.contains('enemy'))
 						) {
-							console.log('味方の駒をクリックしました。');
+							// 味方の駒クリック
 							removePlaceable();
 						} else {
-							console.log('敵の駒をクリックしました。');
+							// 敵の駒クリック
 							if(clickablePos === null || allyMotigoma === null || enemyMotigoma === null) return;
 							if(koma.classList.contains('enemy')) {
 								clickablePos.appendChild(elem);
 								allyMotigoma.appendChild(koma);
+								koma.classList.remove('enemy');
+                                koma.classList.add('ally');
+								for(let i = 0; i < komaArrs.length / 2; i++) {
+									if(koma.classList.contains(`${komaArrs[i][1]}`)) {
+										koma.classList.remove(`${komaArrs[i][1]}`);
+										koma.classList.add(`${komaArrs[i][2]}`);
+									}
+								}
 							}else if(koma.classList.contains('ally')) {
 								clickablePos.appendChild(elem);
 								enemyMotigoma.appendChild(koma);
+								koma.classList.remove('ally');
+                                koma.classList.add('enemy');
+								for(let i = komaArrs.length / 2; i < komaArrs.length; i++) {
+									if(komaArrs[i][1] === 'ally') continue;
+									if(koma.classList.contains(`${komaArrs[i][1]}`)) {
+										koma.classList.remove(`${komaArrs[i][1]}`);
+										koma.classList.add(`${komaArrs[i][2]}`);
+									}
+								}
 							}
 							insertKoma();
 							removePlaceable();
@@ -118,12 +135,12 @@
 			if(!elem || clickablePosdParentNode.classList.contains($koma)) return;
 	
 			if(!clickablePos.classList.contains($masu)) {
-				console.log('駒を持っている状態でマス目以外の箇所をクリックしました。');
+				// マス目以外をクリック
 				removePlaceable();
 				elem.classList.remove($selected);
 				elem = undefined;
 			}else {
-				console.log('駒を持っている状態でマス目をクリックしました。');
+				// マス目をクリック
 				if(clickablePos.classList.contains($placeable)) {
 					clickablePos.appendChild(elem);
 				}
@@ -134,11 +151,12 @@
 		});
 		
 		function insertKoma() {
-			komaArrs.forEach(komaArr => {
-				komas.forEach(koma => {
+			komas.forEach(koma => {
+				koma.innerHTML = '';
+				komaArrs.forEach(komaArr => {
 					if(koma.classList.contains(komaArr[0]) && koma.classList.contains(komaArr[1])) {
 						const img = document.createElement('img');
-						img.src = `./images/${komaArr[2]}`;
+						img.src = `./images/${komaArr[3]}`;
 						koma.appendChild(img);
 					}
 				});

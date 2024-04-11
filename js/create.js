@@ -14,12 +14,11 @@ function createban(){
 	return gridCell;
 }
 
-function createKoma(opponent, name, image) {
+function createKoma(opponent, name) {
 	const div = document.createElement('div');
 	div.classList.add('koma');
 	div.classList.add(opponent);
 	div.classList.add(name);
-	div.innerHTML += `<img src="./images/${image}">`;
 	return div;
 }
 
