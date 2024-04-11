@@ -43,12 +43,19 @@
         const enemyMotigoma = document.querySelector('.enemy-motigoma');
         let elem = undefined;
         let clickablePos = null;
+        let clickedKomaPos;
+        let flag = 0;
         komas.forEach(koma => {
             koma.addEventListener('click', () => {
                 clickablePos = koma.parentElement;
+                if (flag === 0) {
+                    clickedKomaPos = koma.parentElement;
+                    flag = 1;
+                }
                 if (elem === koma) {
                     // 同一の駒クリック
                     removePlaceable();
+                    flag = 0;
                 }
                 else {
                     if (elem !== undefined) {
@@ -56,6 +63,7 @@
                             || (elem.classList.contains('enemy') && koma.classList.contains('enemy'))) {
                             // 味方の駒クリック
                             removePlaceable();
+                            flag = 0;
                         }
                         else {
                             // 敵の駒クリック
@@ -87,9 +95,12 @@
                                     }
                                 }
                             }
-                            komanari(clickablePos);
+                            if (clickedKomaPos === null)
+                                return;
+                            komanari(clickablePos, clickedKomaPos);
                             insertKoma();
                             removePlaceable();
+                            flag = 0;
                         }
                     }
                 }
@@ -131,17 +142,21 @@
                 removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
+                flag = 0;
             }
             else {
                 // マス目をクリック
                 if (clickablePos.classList.contains($placeable)) {
                     clickablePos.appendChild(elem);
                 }
-                komanari(clickablePos);
+                if (clickedKomaPos === null)
+                    return;
+                komanari(clickablePos, clickedKomaPos);
                 insertKoma();
                 removePlaceable();
                 elem.classList.remove($selected);
                 elem = undefined;
+                flag = 0;
             }
         });
         function insertKoma() {
@@ -163,7 +178,9 @@
             });
         }
         function hu(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('hu'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('hu')) {
                 return;
             }
             const LDRU = [
@@ -173,7 +190,9 @@
             test(positionNumber, elem, LDRU);
         }
         function kyou(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kyou'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('kyou')) {
                 return;
             }
             const LDRU = [
@@ -183,7 +202,9 @@
             test(positionNumber, elem, LDRU);
         }
         function kei(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kei'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('kei')) {
                 return;
             }
             const LDRU = [
@@ -193,7 +214,9 @@
             test(positionNumber, elem, LDRU);
         }
         function ginn(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('ginn'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('ginn')) {
                 return;
             }
             const LDRU = [
@@ -203,7 +226,9 @@
             test(positionNumber, elem, LDRU);
         }
         function kinn(positionNumber) {
-            if (!((elem === null || elem === void 0 ? void 0 : elem.classList.contains('kinn')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('nariginn')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('narikei')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('narikyou')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('tokinn')))) {
+            if (elem === undefined)
+                return;
+            if (!(elem.classList.contains('kinn') || elem.classList.contains('nariginn') || elem.classList.contains('narikei') || elem.classList.contains('narikyou') || elem.classList.contains('tokinn'))) {
                 return;
             }
             const LDRU = [
@@ -213,7 +238,9 @@
             test(positionNumber, elem, LDRU);
         }
         function kaku(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kaku'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('kaku')) {
                 return;
             }
             const LDRU = [
@@ -223,7 +250,9 @@
             test(positionNumber, elem, LDRU);
         }
         function hisya(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('hisya'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('hisya')) {
                 return;
             }
             const LDRU = [
@@ -233,7 +262,9 @@
             test(positionNumber, elem, LDRU);
         }
         function uma(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('uma'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('uma')) {
                 return;
             }
             const LDRU = [
@@ -245,7 +276,9 @@
             test(positionNumber, elem, LDRU);
         }
         function ryuu(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('ryuu'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('ryuu')) {
                 return;
             }
             const LDRU = [
@@ -257,7 +290,9 @@
             test(positionNumber, elem, LDRU);
         }
         function gyoku(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('gyoku'))) {
+            if (elem === undefined)
+                return;
+            if (!elem.classList.contains('gyoku')) {
                 return;
             }
             const LDRU = [
@@ -266,72 +301,117 @@
             ];
             test(positionNumber, elem, LDRU);
         }
-        function komanari(clickablePos) {
-            const y = Number(clickablePos.getAttribute('data-y'));
-            if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('hu')) {
-                if (y >= 2 && y <= 3 && elem.classList.contains('ally')) {
+        function komanari(clickablePos, clickedKomaPos) {
+            const clickable_y = Number(clickablePos.getAttribute('data-y'));
+            const clicked_y = Number(clickedKomaPos.getAttribute('data-y'));
+            if (elem === undefined)
+                return;
+            if (elem.classList.contains('hu')) {
+                if (clickable_y >= 2 && clickable_y <= 3 && elem.classList.contains('ally')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (y === 1 && elem.classList.contains('ally')) {
+                else if (clickable_y === 1 && elem.classList.contains('ally')) {
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (y >= 7 && y <= 8 && elem.classList.contains('enemy')) {
+                else if (clickable_y >= 7 && clickable_y <= 8 && elem.classList.contains('enemy')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (y === 9 && elem.classList.contains('enemy')) {
+                else if (clickable_y === 9 && elem.classList.contains('enemy')) {
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
             }
-            else if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('kyou')) {
-                if (y >= 2 && y <= 3 && elem.classList.contains('ally')) {
+            else if (elem.classList.contains('kyou')) {
+                if (clickable_y >= 2 && clickable_y <= 3 && elem.classList.contains('ally')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (y === 1 && elem.classList.contains('ally')) {
+                else if (clickable_y === 1 && elem.classList.contains('ally')) {
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (y >= 7 && y <= 8 && elem.classList.contains('enemy')) {
+                else if (clickable_y >= 7 && clickable_y <= 8 && elem.classList.contains('enemy')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (y === 9 && elem.classList.contains('enemy')) {
+                else if (clickable_y === 9 && elem.classList.contains('enemy')) {
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
             }
-            else if (elem === null || elem === void 0 ? void 0 : elem.classList.contains('kei')) {
-                if (y === 3 && elem.classList.contains('ally')) {
+            else if (elem.classList.contains('kei')) {
+                if (clickable_y === 3 && elem.classList.contains('ally')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (y >= 2 && y <= 1 && elem.classList.contains('ally')) {
+                else if (clickable_y >= 2 && clickable_y <= 1 && elem.classList.contains('ally')) {
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (y === 7 && elem.classList.contains('enemy')) {
+                else if (clickable_y === 7 && elem.classList.contains('enemy')) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (y >= 8 && y <= 9 && elem.classList.contains('enemy')) {
+                else if (clickable_y >= 8 && clickable_y <= 9 && elem.classList.contains('enemy')) {
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
+                }
+            }
+            else if (elem.classList.contains('ginn')) {
+                if ((clickable_y <= 3 || (clicked_y === 3 && clickable_y === 4)) && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('ginn');
+                    elem.classList.add('nariginn');
+                }
+                else if ((clickable_y >= 7 || (clicked_y === 7 && clickable_y === 6)) && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('ginn');
+                    elem.classList.add('nariginn');
+                }
+            }
+            else if (elem.classList.contains('kaku')) {
+                if ((clickable_y <= 3 || clicked_y <= 3) && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kaku');
+                    elem.classList.add('uma');
+                }
+                else if ((clickable_y >= 7 || clicked_y >= 7) && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('kaku');
+                    elem.classList.add('uma');
+                }
+            }
+            else if (elem.classList.contains('hisya')) {
+                if ((clickable_y <= 3 || clicked_y <= 3) && elem.classList.contains('ally')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('hisya');
+                    elem.classList.add('ryuu');
+                }
+                else if ((clickable_y >= 7 || clicked_y >= 7) && elem.classList.contains('enemy')) {
+                    if (!confirm('成りますか?'))
+                        return;
+                    elem.classList.remove('hisya');
+                    elem.classList.add('ryuu');
                 }
             }
         }
