@@ -50,6 +50,7 @@ renderKoma(4, 3, 'enemy', 'kei');
 renderKoma(7, 9, 'ally', 'ginn');
 renderKoma(1, 1, 'ally', 'uma');
 renderKoma(9, 9, 'enemy', 'ryuu');
+renderKoma(6, 2, 'enemy', 'tokinn');
 
 
 

@@ -216,7 +216,7 @@
 		}
 
 		function kinn(positionNumber: number): void {
-			if(!elem?.classList.contains('kinn')) {
+			if(!(elem?.classList.contains('kinn') || elem?.classList.contains('nariginn') || elem?.classList.contains('narikei') || elem?.classList.contains('narikyou') || elem?.classList.contains('tokinn'))) {
 				return;
 			}
 			const LDRU: number[][] = [

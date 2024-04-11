@@ -200,7 +200,7 @@
             test(positionNumber, elem, LDRU);
         }
         function kinn(positionNumber) {
-            if (!(elem === null || elem === void 0 ? void 0 : elem.classList.contains('kinn'))) {
+            if (!((elem === null || elem === void 0 ? void 0 : elem.classList.contains('kinn')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('nariginn')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('narikei')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('narikyou')) || (elem === null || elem === void 0 ? void 0 : elem.classList.contains('tokinn')))) {
                 return;
             }
             const LDRU = [
