@@ -76,26 +76,32 @@
 							// 敵の駒クリック
 							if(clickablePos === null || allyMotigoma === null || enemyMotigoma === null) return;
 							if(koma.classList.contains('enemy')) {
-								clickablePos.appendChild(elem);
-								allyMotigoma.appendChild(koma);
-								koma.classList.remove('enemy');
-                                koma.classList.add('ally');
-								for(let i = 0; i < komaArrs.length / 2; i++) {
-									if(koma.classList.contains(`${komaArrs[i][1]}`)) {
-										koma.classList.remove(`${komaArrs[i][1]}`);
-										koma.classList.add(`${komaArrs[i][2]}`);
+								if(clickablePos.classList.contains($placeable)) {
+									clickablePos.appendChild(elem);
+									allyMotigoma.appendChild(koma);
+									koma.classList.remove('enemy');
+									koma.classList.add('ally');
+									for(let i = 0; i < komaArrs.length / 2; i++) {
+										if(koma.classList.contains(`${komaArrs[i][1]}`)) {
+											koma.classList.remove(`${komaArrs[i][1]}`);
+											koma.classList.add(`${komaArrs[i][2]}`);
+											koma.classList.add('motigoma');
+										}
 									}
 								}
 							}else if(koma.classList.contains('ally')) {
-								clickablePos.appendChild(elem);
-								enemyMotigoma.appendChild(koma);
-								koma.classList.remove('ally');
-                                koma.classList.add('enemy');
-								for(let i = komaArrs.length / 2; i < komaArrs.length; i++) {
-									if(komaArrs[i][1] === 'ally') continue;
-									if(koma.classList.contains(`${komaArrs[i][1]}`)) {
-										koma.classList.remove(`${komaArrs[i][1]}`);
-										koma.classList.add(`${komaArrs[i][2]}`);
+								if(clickablePos.classList.contains($placeable)) {
+									clickablePos.appendChild(elem);
+									enemyMotigoma.appendChild(koma);
+									koma.classList.remove('ally');
+									koma.classList.add('enemy');
+									for(let i = komaArrs.length / 2; i < komaArrs.length; i++) {
+										if(komaArrs[i][1] === 'ally') continue;
+										if(koma.classList.contains(`${komaArrs[i][1]}`)) {
+											koma.classList.remove(`${komaArrs[i][1]}`);
+											koma.classList.add(`${komaArrs[i][2]}`);
+											koma.classList.add('motigoma');
+										}
 									}
 								}
 							}
@@ -147,11 +153,12 @@
 			if(!clickablePos.classList.contains($masu)) {
 				// マス目以外をクリック
 				removePlaceable();
+				flag = 0;
 				elem.classList.remove($selected);
 				elem = undefined;
-				flag = 0;
 			}else {
 				// マス目をクリック
+				console.log(elem);
 				if(clickablePos.classList.contains($placeable)) {
 					clickablePos.appendChild(elem);
 				}
@@ -159,9 +166,9 @@
 				komanari(clickablePos, clickedKomaPos);
 				insertKoma();
 				removePlaceable();
+				flag = 0;
 				elem.classList.remove($selected);
 				elem = undefined;
-				flag = 0;
 			}
 		});
 		
