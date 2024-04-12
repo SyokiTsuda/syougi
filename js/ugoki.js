@@ -156,15 +156,11 @@
             }
             else {
                 // マス目をクリック
-                if (clickablePos.classList.contains($placeable)) {
-                    clickablePos.appendChild(elem);
-                }
                 if (clickedKomaPos === null)
                     return;
-                if (!elem.classList.contains('motigoma')) {
+                if (clickablePos.classList.contains($placeable)) {
+                    clickablePos.appendChild(elem);
                     komanari(clickablePos, clickedKomaPos);
-                }
-                else {
                     elem.classList.remove('motigoma');
                 }
                 insertKoma();
@@ -317,9 +313,58 @@
             komaMove(positionNumber, elem, LDRU);
         }
         function uti() {
+            const allyHus = [];
+            const enemyHus = [];
+            komas.forEach(koma => {
+                if (koma.parentElement !== null) {
+                    if (koma.classList.contains('hu') && koma.classList.contains('ally')) {
+                        const posX = Number(koma.parentElement.getAttribute('data-x'));
+                        allyHus.push(posX);
+                    }
+                    else if (koma.classList.contains('hu') && koma.classList.contains('enemy')) {
+                        const posX = Number(koma.parentElement.getAttribute('data-x'));
+                        enemyHus.push(posX);
+                    }
+                }
+                console.log(allyHus, enemyHus);
+            });
             masus.forEach(masu => {
-                if (masu.children[0] === undefined) {
-                    masu.classList.add($placeable);
+                if (masu.children[0] === undefined && elem !== undefined) {
+                    const posY = Number(masu.getAttribute('data-y'));
+                    const posX = Number(masu.getAttribute('data-x'));
+                    if (elem.classList.contains('hu') && elem.classList.contains('ally')) {
+                        if (posY !== 1 && allyHus.indexOf(posX) === -1) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else if (elem.classList.contains('hu') && elem.classList.contains('enemy')) {
+                        if (posY !== 9 && enemyHus.indexOf(posX) === -1) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else if (elem.classList.contains('kyou') && elem.classList.contains('ally')) {
+                        if (posY !== 1) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else if (elem.classList.contains('kyou') && elem.classList.contains('enemy')) {
+                        if (posY !== 9) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else if (elem.classList.contains('kei') && elem.classList.contains('ally')) {
+                        if (posY > 2) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else if (elem.classList.contains('kei') && elem.classList.contains('enemy')) {
+                        if (posY < 8) {
+                            masu.classList.add($placeable);
+                        }
+                    }
+                    else {
+                        masu.classList.add($placeable);
+                    }
                 }
             });
         }
@@ -381,7 +426,7 @@
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (clickable_y >= 2 && clickable_y <= 1 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                else if (clickable_y <= 2 && clickable_y >= 1 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
