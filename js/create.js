@@ -34,29 +34,44 @@ function renderKoma(x, y, opponent, name) {
 
 
 renderKoma(5, 9, 'ally', 'gyoku');
-renderKoma(5, 8, 'ally', 'kinn');
-renderKoma(6, 9, 'enemy', 'kinn');
-renderKoma(3, 9, 'enemy', 'ginn');
-renderKoma(5, 5, 'enemy', 'kyou');
-renderKoma(1, 9, 'ally', 'kyou');
-renderKoma(5, 3, 'ally', 'kaku');
-renderKoma(3, 5, 'ally', 'hu');
-renderKoma(9, 3, 'enemy', 'hu');
-renderKoma(5, 7, 'enemy', 'kaku');
-renderKoma(9, 5, 'ally', 'hisya');
-renderKoma(7, 1, 'ally', 'kaku');
-renderKoma(1, 5, 'enemy', 'hisya');
-renderKoma(4, 3, 'enemy', 'kei');
+renderKoma(6, 9, 'ally', 'kinn');
+renderKoma(4, 9, 'ally', 'kinn');
 renderKoma(7, 9, 'ally', 'ginn');
-renderKoma(1, 1, 'ally', 'uma');
-renderKoma(9, 9, 'enemy', 'ryuu');
-renderKoma(6, 2, 'enemy', 'tokinn');
+renderKoma(3, 9, 'ally', 'ginn');
+renderKoma(8, 9, 'ally', 'kei');
+renderKoma(2, 9, 'ally', 'kei');
+renderKoma(9, 9, 'ally', 'kyou');
+renderKoma(1, 9, 'ally', 'kyou');
+renderKoma(8, 8, 'ally', 'kaku');
+renderKoma(2, 8, 'ally', 'hisya');
+renderKoma(5, 7, 'ally', 'hu');
+renderKoma(6, 7, 'ally', 'hu');
+renderKoma(4, 7, 'ally', 'hu');
+renderKoma(7, 7, 'ally', 'hu');
+renderKoma(3, 7, 'ally', 'hu');
+renderKoma(8, 7, 'ally', 'hu');
+renderKoma(2, 7, 'ally', 'hu');
+renderKoma(9, 7, 'ally', 'hu');
+renderKoma(1, 7, 'ally', 'hu');
+renderKoma(5, 1, 'enemy', 'ou');
+renderKoma(4, 1, 'enemy', 'kinn');
+renderKoma(6, 1, 'enemy', 'kinn');
+renderKoma(3, 1, 'enemy', 'ginn');
+renderKoma(7, 1, 'enemy', 'ginn');
+renderKoma(2, 1, 'enemy', 'kei');
+renderKoma(8, 1, 'enemy', 'kei');
+renderKoma(1, 1, 'enemy', 'kyou');
+renderKoma(9, 1, 'enemy', 'kyou');
+renderKoma(2, 2, 'enemy', 'kaku');
+renderKoma(8, 2, 'enemy', 'hisya');
+renderKoma(5, 3, 'enemy', 'hu');
+renderKoma(4, 3, 'enemy', 'hu');
+renderKoma(6, 3, 'enemy', 'hu');
+renderKoma(3, 3, 'enemy', 'hu');
+renderKoma(7, 3, 'enemy', 'hu');
+renderKoma(2, 3, 'enemy', 'hu');
+renderKoma(8, 3, 'enemy', 'hu');
+renderKoma(1, 3, 'enemy', 'hu');
+renderKoma(9, 3, 'enemy', 'hu');
 
-
-
-
-
-function yarinaosi(){
-	document.location.reload(true);
-}
 

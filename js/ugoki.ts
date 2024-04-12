@@ -48,12 +48,18 @@
 		const masus: NodeListOf<Element> = document.querySelectorAll('.masu');
 		const allyMotigoma: null | Element = document.querySelector('.ally-motigoma');
 		const enemyMotigoma: null | Element = document.querySelector('.enemy-motigoma');
+		const komaoto: null | HTMLAudioElement = document.querySelector('#komaoto');
 		let elem: undefined | Element = undefined;
 		let clickablePos: null | Element = null;
 		let clickedKomaPos: null | Element;
 		let flag: number = 0;
+
+		if(komaoto !== null) komaoto.volume = 1;
 	
 		komas.forEach(koma => {
+			if(koma.classList.contains('ally')) {
+				koma.classList.add('tebann');
+			}
 			koma.addEventListener('click', () => {
 				clickablePos = koma.parentElement;
 				if(flag === 0) {
@@ -86,6 +92,7 @@
 											koma.classList.remove(`${komaArrs[i][1]}`);
 											koma.classList.add(`${komaArrs[i][2]}`);
 											koma.classList.add('motigoma');
+											koma.classList.add('tebann');
 										}
 									}
 								}
@@ -101,6 +108,7 @@
 											koma.classList.remove(`${komaArrs[i][1]}`);
 											koma.classList.add(`${komaArrs[i][2]}`);
 											koma.classList.add('motigoma');
+											koma.classList.add('tebann');
 										}
 									}
 								}
@@ -109,6 +117,10 @@
 							komanari(clickablePos, clickedKomaPos);
 							insertKoma();
 							removePlaceable();
+							changeTebann(komas);
+							if(komaoto !== null) {
+								komaoto.play();
+							}
 							flag = 0;
 						}
 						// ここまで敵駒クリック処理
@@ -121,6 +133,8 @@
 						return;
 					}
 				}
+
+				if(!koma.classList.contains('tebann')) return;
 				
 				elem = koma;
 				if(elem.parentElement === null) return;
@@ -170,11 +184,25 @@
 				}
 				insertKoma();
 				removePlaceable();
+				changeTebann(komas);
+				if(komaoto !== null) {
+					komaoto.play();
+				}
 				flag = 0;
 				elem.classList.remove($selected);
 				elem = undefined;
 			}
 		});
+
+		function changeTebann(komas: NodeListOf<Element>): void {
+			komas.forEach(koma => {
+				if(koma.classList.contains('tebann')) {
+					koma.classList.remove('tebann');
+				}else {
+					koma.classList.add('tebann');
+				}
+			});
+		}
 		
 		function insertKoma() {
 			komas.forEach(koma => {
