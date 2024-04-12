@@ -4,9 +4,7 @@
 	if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 		
 		function createban(): string{
-
 			let gridCell: string = `<div class="ban">`;
-		
 			for(let i=1; i<=9; i++) {
 				gridCell += `<div class="paragraph">`;
 				for(let t=9; t>=1; t--) {
@@ -14,7 +12,6 @@
 				}
 				gridCell += `</div>`;
 			}
-		
 			gridCell += `</div>`
 			return gridCell;
 		}
