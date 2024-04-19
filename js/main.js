@@ -345,6 +345,32 @@
             ];
             komaMove(positionNumber, elem, LDRU);
         }
+        function test(posX, posY, elem, LDRU) {
+            for (let t = 0; t < Object.keys(LDRU).length; t++) {
+                if (elem.classList.contains(Object.keys(LDRU)[t])) {
+                    for (let i = 0; i < LDRU[Object.keys(LDRU)[t]].length; i++) {
+                        for (let x = posX, y = posY; x * LDRU[Object.keys(LDRU)[t]][i][0] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][0] || y * LDRU[Object.keys(LDRU)[t]][i][1] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][1]; x = x + LDRU[Object.keys(LDRU)[t]][i][0], y = y + LDRU[Object.keys(LDRU)[t]][i][1]) {
+                            if (x === posX && y === posY)
+                                continue;
+                            const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
+                            if (masu === null)
+                                break;
+                            if (masu.children[0]) {
+                                if (masu.children[0].classList.contains(Object.keys(LDRU)[0 + t]))
+                                    break;
+                            }
+                            masu.classList.add($placeable);
+                            if (masu.children[0]) {
+                                if (masu.children[0].classList.contains(Object.keys(LDRU)[1 - t]))
+                                    break;
+                            }
+                            if (!LDRU[Object.keys(LDRU)[0]][i][2])
+                                break;
+                        }
+                    }
+                }
+            }
+        }
         function kaku(posX, posY) {
             if (elem === undefined)
                 return;
@@ -352,151 +378,10 @@
                 return;
             }
             const LDRU = {
-                'ally': [[1, -1], [1, 1], [-1, 1], [-1, -1]],
-                'enemy': [[-1, 1], [-1, -1], [1, -1], [1, 1]]
+                'ally': [[1, -1, true], [1, 1, true], [-1, 1, true], [-1, -1, true]],
+                'enemy': [[-1, 1, true], [-1, -1, true], [1, -1, true], [1, 1, true]]
             };
-            const keys = Object.keys(LDRU); //keys[1]
-            console.log(keys);
-            if (elem.classList.contains(keys[0])) {
-                for (let i = 0; i < LDRU[keys[0]].length; i++) {
-                    for (let x = posX, y = posY; x * LDRU[keys[0]][i][0] <= 4 + 5 * LDRU[keys[0]][i][0] || y * LDRU[keys[0]][i][1] <= 4 + 5 * LDRU[keys[0]][i][1]; x = x + LDRU[keys[0]][i][0], y = y + LDRU[keys[0]][i][1]) {
-                        if (x === posX && y === posY)
-                            continue;
-                        const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                        if (masu === null)
-                            break;
-                        if (masu.children[0]) {
-                            if (masu.children[0].classList.contains(keys[0]))
-                                break;
-                        }
-                        masu.classList.add($placeable);
-                        if (masu.children[0]) {
-                            if (masu.children[0].classList.contains(keys[1]))
-                                break;
-                        }
-                    }
-                }
-                // for(let t = 0; t < LDRU[keys[0]].length; t++) {
-                // 	for(let x = posX, y = posY; x * (1) <= 4 + 5 * (1) || y * (-1) <= 4 + 5 * (-1); x = x + (1), y = y + (-1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (1) <= 4 + 5 * (1) || y <= 4 + 5 * (1); x = x + (1), y = y + (1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (-1) <= 4 + 5 * (-1) || y <= 4 + 5 * (1); x = x + (-1), y = y + (1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (-1) <= 4 + 5 * (-1) || y * (-1) <= 4 + 5 * (-1); x = x + (-1), y = y + (-1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 	}
-                // }
-            }
-            if (elem.classList.contains(keys[1])) {
-                for (let i = 0; i < LDRU[keys[1]].length; i++) {
-                    for (let x = posX, y = posY; x * LDRU[keys[1]][i][0] <= 4 + 5 * LDRU[keys[1]][i][0] || y * LDRU[keys[1]][i][1] <= 4 + 5 * LDRU[keys[1]][i][1]; x = x + LDRU[keys[1]][i][0], y = y + LDRU[keys[1]][i][1]) {
-                        if (x === posX && y === posY)
-                            continue;
-                        const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                        if (masu === null)
-                            break;
-                        if (masu.children[0]) {
-                            if (masu.children[0].classList.contains(keys[1]))
-                                break;
-                        }
-                        masu.classList.add($placeable);
-                        if (masu.children[0]) {
-                            if (masu.children[0].classList.contains(keys[0]))
-                                break;
-                        }
-                    }
-                }
-                // for(let t = 0; t < LDRU[keys[1]].length; t++) {
-                // 	for(let x = posX, y = posY; x * (-1) <= 4 + 5 * (-1) || y <= 4 + 5 * (1); x = x + (-1), y = y + (1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (-1) <= 4 + 5 * (-1) || y * (-1) <= 4 + 5 * (-1); x = x + (-1), y = y + (-1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (1) <= 4 + 5 * (1) || y * (-1) <= 4 + 5 * (-1); x = x + (1), y = y + (-1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 	}
-                // 	for(let x = posX, y = posY; x * (1) <= 4 + 5 * (1) || y <= 4 + 5 * (1); x = x + (1), y = y + (1)) {
-                // 		if(x === posX && y === posY) continue;
-                // 		const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                // 		if(masu === null) break;
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[1])) break;
-                // 		}
-                // 		masu.classList.add($placeable);
-                // 		if(masu.children[0]) {
-                // 			if(masu.children[0].classList.contains(keys[0])) break;
-                // 		}
-                // 	}
-                // }
-            }
+            test(posX, posY, elem, LDRU);
         }
         function hisya(positionNumber) {
             if (elem === undefined)
