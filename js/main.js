@@ -207,7 +207,7 @@
                 const x = Number(elem.parentElement.getAttribute('data-x'));
                 const y = Number(elem.parentElement.getAttribute('data-y'));
                 const positionNumber = x * 10 + y * 1;
-                kaku(positionNumber);
+                kaku();
                 hisya(positionNumber);
                 kyou(positionNumber);
                 hu(positionNumber);
@@ -345,18 +345,29 @@
             ];
             komaMove(positionNumber, elem, LDRU);
         }
-        function kaku(positionNumber) {
+        function kaku() {
             if (elem === undefined)
                 return;
             if (!elem.classList.contains('kaku')) {
                 return;
             }
             const LDRU = [
-                [11, -1, 1], [-9, -1, 1], [-11, -1, 1], [9, -1, 1],
-                [11, 1, 1], [-9, 1, 1], [-11, 1, 1], [9, 1, 1]
+                { ally: [[1, -1], [1, 1], [-1, 1], [-1, -1]] },
+                { enemy: [[-1, 1], [-1, -1], [1, -1], [1, 1]] },
             ];
-            komaMove(positionNumber, elem, LDRU);
+            console.log(LDRU.ally);
         }
+        // function kaku(positionNumber: number): void {
+        // 	if(elem === undefined) return;
+        // 	if(!elem.classList.contains('kaku')) {
+        // 		return;
+        // 	}
+        // 	const LDRU :number[][] = [
+        // 		[11, -1, 1], [-9, -1, 1], [-11, -1, 1], [9, -1, 1], 
+        // 		[11, 1, 1], [-9, 1, 1], [-11, 1, 1], [9, 1, 1]
+        // 	];
+        // 	komaMove(positionNumber, elem, LDRU);
+        // }
         function hisya(positionNumber) {
             if (elem === undefined)
                 return;
