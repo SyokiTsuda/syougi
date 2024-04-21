@@ -13,107 +13,131 @@
             gridCell += `</div>`;
             return gridCell;
         }
-        function createKoma(opponent, name) {
+        function createKoma(id, opponent, name) {
             const div = document.createElement('div');
             div.classList.add('koma');
             div.classList.add(opponent);
             div.classList.add(name);
+            div.setAttribute('data-id', `${id}`);
             return div;
         }
         const container = document.getElementById('container');
         if (container !== null) {
             container.innerHTML += createban();
-            function renderKoma(x, y, opponent, name) {
+            function renderKoma(id, x, y, opponent, name) {
                 const targetElement = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
                 if (targetElement !== null) {
-                    targetElement.appendChild(createKoma(opponent, name));
+                    targetElement.appendChild(createKoma(id, opponent, name));
                 }
             }
-            renderKoma(5, 9, 'ally', 'gyoku');
-            renderKoma(6, 9, 'ally', 'kinn');
-            renderKoma(4, 9, 'ally', 'kinn');
-            renderKoma(7, 9, 'ally', 'ginn');
-            renderKoma(3, 9, 'ally', 'ginn');
-            renderKoma(8, 9, 'ally', 'kei');
-            renderKoma(2, 9, 'ally', 'kei');
-            renderKoma(9, 9, 'ally', 'kyou');
-            renderKoma(1, 9, 'ally', 'kyou');
-            renderKoma(8, 8, 'ally', 'kaku');
-            renderKoma(2, 8, 'ally', 'hisya');
-            renderKoma(5, 7, 'ally', 'hu');
-            renderKoma(6, 7, 'ally', 'hu');
-            renderKoma(4, 7, 'ally', 'hu');
-            renderKoma(7, 7, 'ally', 'hu');
-            renderKoma(3, 7, 'ally', 'hu');
-            renderKoma(8, 7, 'ally', 'hu');
-            renderKoma(2, 7, 'ally', 'hu');
-            renderKoma(9, 7, 'ally', 'hu');
-            renderKoma(1, 7, 'ally', 'hu');
-            renderKoma(5, 1, 'enemy', 'ou');
-            renderKoma(4, 1, 'enemy', 'kinn');
-            renderKoma(6, 1, 'enemy', 'kinn');
-            renderKoma(3, 1, 'enemy', 'ginn');
-            renderKoma(7, 1, 'enemy', 'ginn');
-            renderKoma(2, 1, 'enemy', 'kei');
-            renderKoma(8, 1, 'enemy', 'kei');
-            renderKoma(1, 1, 'enemy', 'kyou');
-            renderKoma(9, 1, 'enemy', 'kyou');
-            renderKoma(2, 2, 'enemy', 'kaku');
-            renderKoma(8, 2, 'enemy', 'hisya');
-            renderKoma(5, 3, 'enemy', 'hu');
-            renderKoma(4, 3, 'enemy', 'hu');
-            renderKoma(6, 3, 'enemy', 'hu');
-            renderKoma(3, 3, 'enemy', 'hu');
-            renderKoma(7, 3, 'enemy', 'hu');
-            renderKoma(2, 3, 'enemy', 'hu');
-            renderKoma(8, 3, 'enemy', 'hu');
-            renderKoma(1, 3, 'enemy', 'hu');
-            renderKoma(9, 3, 'enemy', 'hu');
+            renderKoma(1, 5, 9, 'ally', 'gyoku');
+            renderKoma(7, 6, 9, 'ally', 'kinn');
+            renderKoma(8, 4, 9, 'ally', 'kinn');
+            renderKoma(11, 7, 9, 'ally', 'ginn');
+            renderKoma(12, 3, 9, 'ally', 'ginn');
+            renderKoma(15, 8, 9, 'ally', 'kei');
+            renderKoma(16, 2, 9, 'ally', 'kei');
+            renderKoma(19, 9, 9, 'ally', 'kyou');
+            renderKoma(20, 1, 9, 'ally', 'kyou');
+            renderKoma(5, 8, 8, 'ally', 'kaku');
+            renderKoma(3, 2, 8, 'ally', 'hisya');
+            renderKoma(23, 5, 7, 'ally', 'hu');
+            renderKoma(24, 6, 7, 'ally', 'hu');
+            renderKoma(25, 4, 7, 'ally', 'hu');
+            renderKoma(26, 7, 7, 'ally', 'hu');
+            renderKoma(27, 3, 7, 'ally', 'hu');
+            renderKoma(28, 8, 7, 'ally', 'hu');
+            renderKoma(29, 2, 7, 'ally', 'hu');
+            renderKoma(30, 9, 7, 'ally', 'hu');
+            renderKoma(31, 1, 7, 'ally', 'hu');
+            renderKoma(2, 5, 1, 'enemy', 'ou');
+            renderKoma(9, 4, 1, 'enemy', 'kinn');
+            renderKoma(10, 6, 1, 'enemy', 'kinn');
+            renderKoma(13, 3, 1, 'enemy', 'ginn');
+            renderKoma(14, 7, 1, 'enemy', 'ginn');
+            renderKoma(17, 2, 1, 'enemy', 'kei');
+            renderKoma(18, 8, 1, 'enemy', 'kei');
+            renderKoma(21, 1, 1, 'enemy', 'kyou');
+            renderKoma(22, 9, 1, 'enemy', 'kyou');
+            renderKoma(6, 2, 2, 'enemy', 'kaku');
+            renderKoma(4, 8, 2, 'enemy', 'hisya');
+            renderKoma(32, 5, 3, 'enemy', 'hu');
+            renderKoma(33, 4, 3, 'enemy', 'hu');
+            renderKoma(34, 6, 3, 'enemy', 'hu');
+            renderKoma(35, 3, 3, 'enemy', 'hu');
+            renderKoma(36, 7, 3, 'enemy', 'hu');
+            renderKoma(37, 2, 3, 'enemy', 'hu');
+            renderKoma(38, 8, 3, 'enemy', 'hu');
+            renderKoma(39, 1, 3, 'enemy', 'hu');
+            renderKoma(40, 9, 3, 'enemy', 'hu');
         }
         const komaArrs = [
-            ['ally', 'ou', 'ou', 'syougi_koma01_z_01.png'],
-            ['ally', 'kaku', 'kaku', 'syougi_koma01_z_02.png'],
-            ['ally', 'uma', 'kaku', 'syougi_koma01_z_03.png'],
-            ['ally', 'hisya', 'hisya', 'syougi_koma01_z_04.png'],
-            ['ally', 'ryuu', 'hisya', 'syougi_koma01_z_05.png'],
-            ['ally', 'kinn', 'kinn', 'syougi_koma01_z_06.png'],
-            ['ally', 'ginn', 'ginn', 'syougi_koma01_z_07.png'],
-            ['ally', 'nariginn', 'ginn', 'syougi_koma01_z_08.png'],
-            ['ally', 'kei', 'kei', 'syougi_koma01_z_09.png'],
-            ['ally', 'narikei', 'kei', 'syougi_koma01_z_10.png'],
-            ['ally', 'kyou', 'kyou', 'syougi_koma01_z_11.png'],
-            ['ally', 'narikyou', 'kyou', 'syougi_koma01_z_12.png'],
-            ['ally', 'hu', 'hu', 'syougi_koma01_z_13.png'],
-            ['ally', 'tokinn', 'hu', 'syougi_koma01_z_14.png'],
-            ['ally', 'gyoku', 'gyoku', 'syougi_koma01_z_15.png'],
-            ['enemy', 'ou', 'ou', 'Gsyougi_koma01_z_01.png'],
-            ['enemy', 'kaku', 'kaku', 'Gsyougi_koma01_z_02.png'],
-            ['enemy', 'uma', 'kaku', 'Gsyougi_koma01_z_03.png'],
-            ['enemy', 'hisya', 'hisya', 'Gsyougi_koma01_z_04.png'],
-            ['enemy', 'ryuu', 'hisya', 'Gsyougi_koma01_z_05.png'],
-            ['enemy', 'kinn', 'kinn', 'Gsyougi_koma01_z_06.png'],
-            ['enemy', 'ginn', 'ginn', 'Gsyougi_koma01_z_07.png'],
-            ['enemy', 'nariginn', 'ginn', 'Gsyougi_koma01_z_08.png'],
-            ['enemy', 'kei', 'kei', 'Gsyougi_koma01_z_09.png'],
-            ['enemy', 'narikei', 'kei', 'Gsyougi_koma01_z_10.png'],
-            ['enemy', 'kyou', 'kyou', 'Gsyougi_koma01_z_11.png'],
-            ['enemy', 'narikyou', 'kyou', 'Gsyougi_koma01_z_12.png'],
-            ['enemy', 'hu', 'hu', 'Gsyougi_koma01_z_13.png'],
-            ['enemy', 'tokinn', 'hu', 'Gsyougi_koma01_z_14.png'],
-            ['enemy', 'gyoku', 'gyoku', 'Gsyougi_koma01_z_15.png'],
+            ['ou', 'ou'],
+            ['kaku', 'kaku'],
+            ['uma', 'kaku'],
+            ['hisya', 'hisya'],
+            ['ryuu', 'hisya'],
+            ['kinn', 'kinn'],
+            ['ginn', 'ginn'],
+            ['nariginn', 'ginn'],
+            ['kei', 'kei'],
+            ['narikei', 'kei'],
+            ['kyou', 'kyou'],
+            ['narikyou', 'kyou'],
+            ['hu', 'hu'],
+            ['tokinn', 'hu'],
+            ['gyoku', 'gyoku'],
         ];
+        const testkomaArrs = {
+            'ally': [
+                ['ou', 'syougi_koma01_z_01.png'],
+                ['kaku', 'syougi_koma01_z_02.png'],
+                ['uma', 'syougi_koma01_z_03.png'],
+                ['hisya', 'syougi_koma01_z_04.png'],
+                ['ryuu', 'syougi_koma01_z_05.png'],
+                ['kinn', 'syougi_koma01_z_06.png'],
+                ['ginn', 'syougi_koma01_z_07.png'],
+                ['nariginn', 'syougi_koma01_z_08.png'],
+                ['kei', 'syougi_koma01_z_09.png'],
+                ['narikei', 'syougi_koma01_z_10.png'],
+                ['kyou', 'syougi_koma01_z_11.png'],
+                ['narikyou', 'syougi_koma01_z_12.png'],
+                ['hu', 'syougi_koma01_z_13.png'],
+                ['tokinn', 'syougi_koma01_z_14.png'],
+                ['gyoku', 'syougi_koma01_z_15.png'],
+            ],
+            'enemy': [
+                ['ou', 'Gsyougi_koma01_z_01.png'],
+                ['kaku', 'Gsyougi_koma01_z_02.png'],
+                ['uma', 'Gsyougi_koma01_z_03.png'],
+                ['hisya', 'Gsyougi_koma01_z_04.png'],
+                ['ryuu', 'Gsyougi_koma01_z_05.png'],
+                ['kinn', 'Gsyougi_koma01_z_06.png'],
+                ['ginn', 'Gsyougi_koma01_z_07.png'],
+                ['nariginn', 'Gsyougi_koma01_z_08.png'],
+                ['kei', 'Gsyougi_koma01_z_09.png'],
+                ['narikei', 'Gsyougi_koma01_z_10.png'],
+                ['kyou', 'Gsyougi_koma01_z_11.png'],
+                ['narikyou', 'Gsyougi_koma01_z_12.png'],
+                ['hu', 'Gsyougi_koma01_z_13.png'],
+                ['tokinn', 'Gsyougi_koma01_z_14.png'],
+                ['gyoku', 'Gsyougi_koma01_z_15.png'],
+            ]
+        };
+        const testKomas = Object.entries(testkomaArrs);
         const $selected = 'selected';
         const $placeable = 'placeable';
         const $koma = 'koma';
         const $masu = 'masu';
         const komas = document.querySelectorAll('.koma');
         const masus = document.querySelectorAll('.masu');
-        const allyMotigoma = document.querySelector('.ally-motigoma');
-        const enemyMotigoma = document.querySelector('.enemy-motigoma');
+        const allyMotigoma = document.querySelector('.ally.motigomaArea');
+        const enemyMotigoma = document.querySelector('.enemy.motigomaArea');
         const komaoto = document.querySelector('#komaoto');
+        let motigomaArea = null;
         let elem = undefined;
-        let clickablePos = null;
-        let clickedKomaPos;
+        let clickToPos = null;
+        let clickFromPos;
         let flag = 0;
         if (komaoto !== null)
             komaoto.volume = 1;
@@ -122,76 +146,60 @@
                 koma.classList.add('tebann');
             }
             koma.addEventListener('click', () => {
-                clickablePos = koma.parentElement;
-                if (flag === 0) {
-                    clickedKomaPos = koma.parentElement;
-                    flag = 1;
-                }
-                if (elem === koma) {
-                    // 同一の駒クリック
-                    removePlaceable();
-                    flag = 0;
+                if (elem !== undefined) {
+                    clickToPos = koma.parentElement;
                 }
                 else {
-                    if (elem !== undefined) {
-                        if ((elem.classList.contains('ally') && koma.classList.contains('ally'))
-                            || (elem.classList.contains('enemy') && koma.classList.contains('enemy'))) {
-                            // 味方の駒クリック
-                            removePlaceable();
-                            flag = 0;
-                        }
-                        else {
-                            // 敵駒クリック処理
-                            if (clickablePos === null || allyMotigoma === null || enemyMotigoma === null)
-                                return;
+                    clickFromPos = koma.parentElement;
+                }
+                if (elem !== undefined) {
+                    if (elem !== koma) {
+                        // 敵駒クリック処理
+                        if (clickToPos === null || allyMotigoma === null || enemyMotigoma === null)
+                            return;
+                        if (clickToPos.classList.contains($placeable)) {
                             if (koma.classList.contains('enemy')) {
-                                if (clickablePos.classList.contains($placeable)) {
-                                    clickablePos.appendChild(elem);
-                                    allyMotigoma.appendChild(koma);
-                                    koma.classList.remove('enemy');
-                                    koma.classList.add('ally');
-                                    for (let i = 0; i < komaArrs.length / 2; i++) {
-                                        if (koma.classList.contains(`${komaArrs[i][1]}`)) {
-                                            koma.classList.remove(`${komaArrs[i][1]}`);
-                                            koma.classList.add(`${komaArrs[i][2]}`);
-                                            koma.classList.add('motigoma');
-                                            koma.classList.add('tebann');
-                                        }
-                                    }
+                            }
+                            if (koma.classList.contains('ally')) {
+                            }
+                            komaArrs.forEach(komaArr => {
+                                if (koma.classList.contains(komaArr[0])) {
+                                    koma.classList.remove(komaArr[0]);
+                                    koma.classList.add(komaArr[1]);
+                                }
+                            });
+                            if (koma.classList.contains('enemy')) {
+                                koma.classList.remove('enemy');
+                                koma.classList.add('ally');
+                                motigomaArea = document.querySelector('.ally.motigomaArea');
+                                if (motigomaArea !== null) {
+                                    motigomaArea.appendChild(koma);
                                 }
                             }
                             else if (koma.classList.contains('ally')) {
-                                if (clickablePos.classList.contains($placeable)) {
-                                    clickablePos.appendChild(elem);
-                                    enemyMotigoma.appendChild(koma);
-                                    koma.classList.remove('ally');
-                                    koma.classList.add('enemy');
-                                    for (let i = komaArrs.length / 2; i < komaArrs.length; i++) {
-                                        if (komaArrs[i][1] === 'ally')
-                                            continue;
-                                        if (koma.classList.contains(`${komaArrs[i][1]}`)) {
-                                            koma.classList.remove(`${komaArrs[i][1]}`);
-                                            koma.classList.add(`${komaArrs[i][2]}`);
-                                            koma.classList.add('motigoma');
-                                            koma.classList.add('tebann');
-                                        }
-                                    }
+                                koma.classList.remove('ally');
+                                koma.classList.add('enemy');
+                                motigomaArea = document.querySelector('.enemy.motigomaArea');
+                                if (motigomaArea !== null) {
+                                    motigomaArea.appendChild(koma);
                                 }
                             }
-                            if (clickedKomaPos === null)
+                            clickToPos.appendChild(elem);
+                            koma.classList.add('motigoma');
+                            koma.classList.add('tebann');
+                            if (clickFromPos === null)
                                 return;
-                            komanari(clickablePos, clickedKomaPos);
+                            komanari(clickToPos, clickFromPos);
                             insertKoma();
-                            removePlaceable();
                             changeTebann(komas);
                             if (komaoto !== null) {
                                 komaoto.play();
                             }
-                            flag = 0;
+                            removePlaceable();
                         }
-                        // ここまで敵駒クリック処理
                     }
                 }
+                removePlaceable();
                 if (elem !== undefined) {
                     if (elem.classList.contains($selected)) {
                         elem.classList.remove($selected);
@@ -206,7 +214,6 @@
                     return;
                 const x = Number(elem.parentElement.getAttribute('data-x'));
                 const y = Number(elem.parentElement.getAttribute('data-y'));
-                const positionNumber = x * 10 + y * 1;
                 test(x, y);
                 if (elem.classList.contains('motigoma')) {
                     uti();
@@ -215,26 +222,25 @@
             });
         });
         document.addEventListener('click', e => {
-            clickablePos = e.target;
-            const clickablePosdParentNode = clickablePos.parentElement;
-            if (!clickablePosdParentNode)
+            clickToPos = e.target;
+            const clickToPosdParentNode = clickToPos.parentElement;
+            if (!clickToPosdParentNode)
                 return;
-            if (!elem || clickablePosdParentNode.classList.contains($koma))
+            if (!elem || clickToPosdParentNode.classList.contains($koma))
                 return;
-            if (!clickablePos.classList.contains($masu)) {
+            if (!clickToPos.classList.contains($masu)) {
                 // マス目以外をクリック
                 removePlaceable();
-                flag = 0;
                 elem.classList.remove($selected);
                 elem = undefined;
             }
             else {
                 // マス目をクリック
-                if (clickedKomaPos === null)
+                if (clickFromPos === null)
                     return;
-                if (clickablePos.classList.contains($placeable)) {
-                    clickablePos.appendChild(elem);
-                    komanari(clickablePos, clickedKomaPos);
+                if (clickToPos.classList.contains($placeable)) {
+                    clickToPos.appendChild(elem);
+                    komanari(clickToPos, clickFromPos);
                     elem.classList.remove('motigoma');
                     if (komaoto !== null) {
                         komaoto.play();
@@ -242,12 +248,12 @@
                     insertKoma();
                     removePlaceable();
                     changeTebann(komas);
-                    flag = 0;
                     elem.classList.remove($selected);
                     elem = undefined;
                 }
             }
         });
+        insertKoma();
         function changeTebann(komas) {
             komas.forEach(koma => {
                 koma.classList.toggle('tebann');
@@ -256,16 +262,19 @@
         function insertKoma() {
             komas.forEach(koma => {
                 koma.innerHTML = '';
-                komaArrs.forEach(komaArr => {
-                    if (koma.classList.contains(komaArr[0]) && koma.classList.contains(komaArr[1])) {
-                        const img = document.createElement('img');
-                        img.src = `./images/${komaArr[3]}`;
-                        koma.appendChild(img);
+                testKomas.forEach((testKoma) => {
+                    if (koma.classList.contains(testKoma[0])) {
+                        testKoma[1].forEach((e) => {
+                            if (koma.classList.contains(e[0])) {
+                                const img = document.createElement('img');
+                                img.src = `./images/${e[1]}`;
+                                koma.appendChild(img);
+                            }
+                        });
                     }
                 });
             });
         }
-        insertKoma();
         function removePlaceable() {
             masus.forEach(masu => {
                 masu.classList.remove($placeable);
@@ -357,7 +366,6 @@
                         enemyHus.push(posX);
                     }
                 }
-                console.log(allyHus, enemyHus);
             });
             masus.forEach(masu => {
                 if (masu.children[0] === undefined && elem !== undefined) {
@@ -399,87 +407,87 @@
                 }
             });
         }
-        function komanari(clickablePos, clickedKomaPos) {
+        function komanari(clickToPos, clickFromPos) {
             if (elem === undefined)
                 return;
             if (elem.classList.contains('motigoma'))
                 return;
-            const clickable_y = Number(clickablePos.getAttribute('data-y'));
-            const clicked_y = Number(clickedKomaPos.getAttribute('data-y'));
+            const clickToPos_y = Number(clickToPos.getAttribute('data-y'));
+            const clickFromPos_y = Number(clickFromPos.getAttribute('data-y'));
             if (elem.classList.contains('hu')) {
-                if (clickable_y >= 2 && clickable_y <= 3 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if (clickToPos_y >= 2 && clickToPos_y <= 3 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (clickable_y === 1 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y === 1 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (clickable_y >= 7 && clickable_y <= 8 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y >= 7 && clickToPos_y <= 8 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
-                else if (clickable_y === 9 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y === 9 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('hu');
                     elem.classList.add('tokinn');
                 }
             }
             else if (elem.classList.contains('kyou')) {
-                if (clickable_y >= 2 && clickable_y <= 3 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if (clickToPos_y >= 2 && clickToPos_y <= 3 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (clickable_y === 1 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y === 1 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (clickable_y >= 7 && clickable_y <= 8 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y >= 7 && clickToPos_y <= 8 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
-                else if (clickable_y === 9 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y === 9 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('kyou');
                     elem.classList.add('narikyou');
                 }
             }
             else if (elem.classList.contains('kei')) {
-                if (clickable_y === 3 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if (clickToPos_y === 3 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (clickable_y <= 2 && clickable_y >= 1 && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y <= 2 && clickToPos_y >= 1 && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (clickable_y === 7 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y === 7 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
-                else if (clickable_y >= 8 && clickable_y <= 9 && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if (clickToPos_y >= 8 && clickToPos_y <= 9 && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     elem.classList.remove('kei');
                     elem.classList.add('narikei');
                 }
             }
             else if (elem.classList.contains('ginn')) {
-                if ((clickable_y <= 3 || (clicked_y === 3 && clickable_y === 4)) && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if ((clickToPos_y <= 3 || (clickFromPos_y === 3 && clickToPos_y === 4)) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('ginn');
                     elem.classList.add('nariginn');
                 }
-                else if ((clickable_y >= 7 || (clicked_y === 7 && clickable_y === 6)) && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if ((clickToPos_y >= 7 || (clickFromPos_y === 7 && clickToPos_y === 6)) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('ginn');
@@ -487,13 +495,13 @@
                 }
             }
             else if (elem.classList.contains('kaku')) {
-                if ((clickable_y <= 3 || clicked_y <= 3) && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if ((clickToPos_y <= 3 || clickFromPos_y <= 3) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kaku');
                     elem.classList.add('uma');
                 }
-                else if ((clickable_y >= 7 || clicked_y >= 7) && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if ((clickToPos_y >= 7 || clickFromPos_y >= 7) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('kaku');
@@ -501,13 +509,13 @@
                 }
             }
             else if (elem.classList.contains('hisya')) {
-                if ((clickable_y <= 3 || clicked_y <= 3) && elem.classList.contains('ally') && clickablePos.classList.contains($placeable)) {
+                if ((clickToPos_y <= 3 || clickFromPos_y <= 3) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hisya');
                     elem.classList.add('ryuu');
                 }
-                else if ((clickable_y >= 7 || clicked_y >= 7) && elem.classList.contains('enemy') && clickablePos.classList.contains($placeable)) {
+                else if ((clickToPos_y >= 7 || clickFromPos_y >= 7) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
                     if (!confirm('成りますか?'))
                         return;
                     elem.classList.remove('hisya');
@@ -541,31 +549,5 @@
                 }
             }
         }
-        // function komaMove(positionNumber: number, elem: undefined | Element, LDRU: number[][]): void {
-        // 	for(let t = 0; t < LDRU.length; t++) {
-        // 		const flag = LDRU[t][0] > 0 ? 1 : -1;
-        // 		if(elem !== undefined) {
-        // 			if(elem.classList.contains('ally') && LDRU[t][1] === 1) continue;
-        // 			if(elem.classList.contains('enemy') && LDRU[t][1] === -1) continue;	
-        // 		}
-        // 		for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + LDRU[t][0]) {
-        // 			if(i === positionNumber) continue;
-        // 			let posX = Math.floor(i/10);
-        // 			let posY = Math.floor(i - Math.floor(i/10) * 10);
-        // 			let masu = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`);
-        // 			if(masu !== null && elem !== undefined) {
-        // 				if(masu.children[0])
-        // 				{
-        // 					if((masu.children[0].classList.contains('ally')	&& elem.classList.contains('ally'))
-        // 					||(masu.children[0].classList.contains('enemy')) && elem.classList.contains('enemy')) break;
-        // 				}
-        // 				masu.classList.add($placeable);
-        // 				if(masu.children[0]) break;
-        // 			}
-        // 			if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-        // 			if(!LDRU[t][2]) break;
-        // 		}
-        // 	}
-        // }
     }
 }
