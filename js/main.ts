@@ -214,16 +214,7 @@
 				const x = Number(elem.parentElement.getAttribute('data-x'));
 				const y = Number(elem.parentElement.getAttribute('data-y'));
 				const positionNumber: number = x * 10 + y * 1;
-				kaku(x, y);
-				hisya(positionNumber);
-				kyou(positionNumber);
-				hu(positionNumber);
-				kei(positionNumber);
-				ginn(positionNumber);
-				kinn(positionNumber);
-				uma(positionNumber);
-				ryuu(positionNumber);
-				gyoku(positionNumber);
+				test(x, y);
 				if(elem.classList.contains('motigoma')) {
 					uti();
 				}
@@ -269,11 +260,7 @@
 
 		function changeTebann(komas: NodeListOf<Element>): void {
 			komas.forEach(koma => {
-				if(koma.classList.contains('tebann')) {
-					koma.classList.remove('tebann');
-				}else {
-					koma.classList.add('tebann');
-				}
+				koma.classList.toggle('tebann');
 			});
 		}
 		
@@ -297,156 +284,79 @@
 				masu.classList.remove($placeable);
 			})
 		}
-		
-		function hu(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('hu')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[-1, -1, 0],
-				[1, 1, 0]
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
 
-		function kyou(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('kyou')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[-1, -1, 1],
-				[1, 1, 1]
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function kei(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('kei')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[8, -1, 0], [-12, -1, 0],
-				[-8, 1, 0], [12, 1, 0]
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function ginn(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('ginn')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[9, -1, 0], [11, -1, 0],[-1, -1, 0], [-11, -1, 0],[-9, -1, 0],
-				[-9, 1, 0], [-11, 1, 0],[1, 1, 0], [11, 1, 0],[9, 1, 0]
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function kinn(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!(elem.classList.contains('kinn') || elem.classList.contains('nariginn') || elem.classList.contains('narikei') || elem.classList.contains('narikyou') || elem.classList.contains('tokinn'))) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[10, -1, 0],[9, -1, 0],[-1, -1, 0],[-11, -1, 0],[-10, -1, 0],[1, -1, 0],
-				[-10, 1, 0],[-9, 1, 0],[1, 1, 0],[11, 1, 0],[10, 1, 0],[-1, 1, 0],
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function test(posX: number, posY: number, elem: Element, LDRU: any) {
-			for(let t = 0; t < Object.keys(LDRU).length; t++) {
-				if(elem.classList.contains(Object.keys(LDRU)[t])) {
-					for(let i = 0; i < LDRU[Object.keys(LDRU)[t]].length; i++) {
-						for(let x = posX, y = posY; x * LDRU[Object.keys(LDRU)[t]][i][0] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][0] || y * LDRU[Object.keys(LDRU)[t]][i][1] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][1]; x = x + LDRU[Object.keys(LDRU)[t]][i][0], y = y + LDRU[Object.keys(LDRU)[t]][i][1]) {
-							if(x === posX && y === posY) continue;
-							const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-							if(masu === null) break;
-							if(masu.children[0]) {
-								if(masu.children[0].classList.contains(Object.keys(LDRU)[0 + t])) break;
-							}
-							masu.classList.add($placeable);
-							if(masu.children[0]) {
-								if(masu.children[0].classList.contains(Object.keys(LDRU)[1 - t])) break;
-							}
-							if(!LDRU[Object.keys(LDRU)[0]][i][2]) break;
-						}
-					}
-				}
-			}
-		}
-
-
-		function kaku(posX: number, posY: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('kaku')) {
-				return;
-			}
+		function test(posX: number, posY: number): void {
 			const LDRU: any = 
 			{
-				'ally': [[1, -1, true],[1, 1, true],[-1, 1, true],[-1, -1, true]],
-				'enemy': [[-1, 1, true],[-1, -1, true],[1, -1, true],[1, 1, true]]
-			};
-
-			test(posX, posY, elem, LDRU);
-
-		}
-	
-
-		function hisya(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('hisya')) {
-				return;
+				'hu': {
+					'ally': [[0, -1, false]],
+					'enemy': [[0, 1, false]]
+				},
+				'kyou': {
+					'ally': [[0, -1, true]],
+					'enemy': [[0, 1, true]]
+				},
+				'kei': {
+					'ally': [[1, -2, false],[-1, -2, false]],
+					'enemy': [[-1, 2, false],[1, 2, false]]
+				},
+				'ginn': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 1, false],[-1, 1, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, -1, false],[1, -1, false],[1, 1, false]]
+				},
+				'kinn': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[0, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[0, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'nariginn': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[0, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[0, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'narikei': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[0, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[0, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'narikyou': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[0, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[0, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'tokinn': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[0, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[0, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'kaku': {
+					'ally': [[1, -1, true],[1, 1, true],[-1, 1, true],[-1, -1, true]],
+					'enemy': [[-1, 1, true],[-1, -1, true],[1, -1, true],[1, 1, true]]
+				},
+				'hisya': {
+					'ally': [[1, 0, true],[0, 1, true],[-1, 0, true],[0, -1, true]],
+					'enemy': [[-1, 0, true],[0, -1, true],[1, 0, true],[0, 1, true]]
+				},
+				'uma': {
+					'ally': [[1, -1, true],[1, 1, true],[-1, 1, true],[-1, -1, true],[1, 0, false],[0, 1, false],[-1, 0, false],[0, -1, false]],
+					'enemy': [[-1, 1, true],[-1, -1, true],[1, -1, true],[1, 1, true],[-1, 0, false],[0, -1, false],[1, 0, false],[0, 1, false]]
+				},
+				'ryuu': {
+					'ally': [[1, 0, true],[0, 1, true],[-1, 0, true],[0, -1, true],[1, -1, false],[1, 1, false],[-1, 1, false],[-1, -1, false]],
+					'enemy': [[-1, 0, true],[0, -1, true],[1, 0, true],[0, 1, true],[-1, 1, false],[-1, -1, false],[1, -1, false],[1, 1, false]]
+				},
+				'gyoku': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[1, 1, false],[0, 1, false],[-1, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[-1, -1, false],[0, -1, false],[1, -1, false],[1, 0, false],[1, 1, false]]
+				},
+				'ou': {
+					'ally': [[0, -1, false],[1, -1, false],[1, 0, false],[1, 1, false],[0, 1, false],[-1, 1, false],[-1, 0, false],[-1, -1, false]],
+					'enemy': [[0, 1, false],[-1, 1, false],[-1, 0, false],[-1, -1, false],[0, -1, false],[1, -1, false],[1, 0, false],[1, 1, false]]
+				},
 			}
-			const LDRU: number[][] = [
-				[10, -1, 1], [1, -1, 1], [-10, -1, 1], [-1, -1, 1], 
-				[10, 1, 1], [1, 1, 1], [-10, 1, 1], [-1, 1, 1],
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function uma(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('uma')) {
-				return;
-			}
-			const LDRU :number[][] = [
-				[11, -1, 1], [-9, -1, 1], [-11, -1, 1], [9, -1, 1], 
-				[11, 1, 1], [-9, 1, 1], [-11, 1, 1], [9, 1, 1],
-				[10, -1, 0], [1, -1, 0], [-10, -1, 0], [-1, -1, 0],
-				[10, 1, 0], [1, 1, 0], [-10, 1, 0], [-1, 1, 0],
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function ryuu(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('ryuu')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[10, -1, 1], [1, -1, 1], [-10, -1, 1], [-1, -1, 1], 
-				[10, 1, 1], [1, 1, 1], [-10, 1, 1], [-1, 1, 1],
-				[11, -1, 0], [-9, -1, 0], [-11, -1, 0], [9, -1, 0], 
-				[11, 1, 0], [-9, 1, 0], [-11, 1, 0], [9, 1, 0],
-			];
-			komaMove(positionNumber, elem, LDRU);
-		}
-
-		function gyoku(positionNumber: number): void {
-			if(elem === undefined) return;
-			if(!elem.classList.contains('gyoku')) {
-				return;
-			}
-			const LDRU: number[][] = [
-				[11, -1, 0], [10, -1, 0],[9, -1, 0],[-1, -1, 0],[-11, -1, 0],[-10, -1, 0],[-9, -1, 0],[1, -1, 0],
-				[-11, 1, 0],[-10, 1, 0],[-9, 1, 0],[1, 1, 0],[11, 1, 0],[10, 1, 0],[9, 1, 0],[-1, 1, 0],
-			];
-			komaMove(positionNumber, elem, LDRU);
+			const entries = Object.entries(LDRU);
+			entries.forEach(e => {
+				if(elem !== undefined) {
+					if(elem.classList.contains(e[0])) {
+						komaMove(posX, posY, elem, e[1]);
+					}
+				}
+			});
 		}
 
 		function uti(): void {
@@ -591,32 +501,54 @@
 		}
 
 
-		function komaMove(positionNumber: number, elem: undefined | Element, LDRU: number[][]): void {
-			for(let t = 0; t < LDRU.length; t++) {
-				const flag = LDRU[t][0] > 0 ? 1 : -1;
-				if(elem !== undefined) {
-					if(elem.classList.contains('ally') && LDRU[t][1] === 1) continue;
-					if(elem.classList.contains('enemy') && LDRU[t][1] === -1) continue;	
-				}
-				for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + LDRU[t][0]) {
-					if(i === positionNumber) continue;
-					let posX = Math.floor(i/10);
-					let posY = Math.floor(i - Math.floor(i/10) * 10);
-					let masu = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`);
-					if(masu !== null && elem !== undefined) {
-						if(masu.children[0])
-						{
-							if((masu.children[0].classList.contains('ally')	&& elem.classList.contains('ally'))
-							||(masu.children[0].classList.contains('enemy')) && elem.classList.contains('enemy')) break;
+		function komaMove(posX: number, posY: number, elem: Element, LDRU: any) {
+			for(let t = 0; t < Object.keys(LDRU).length; t++) {
+				if(elem.classList.contains(Object.keys(LDRU)[t])) {
+					for(let i = 0; i < LDRU[Object.keys(LDRU)[t]].length; i++) {
+						for(let x = posX, y = posY; x * LDRU[Object.keys(LDRU)[t]][i][0] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][0] || y * LDRU[Object.keys(LDRU)[t]][i][1] <= 4 + 5 * LDRU[Object.keys(LDRU)[t]][i][1]; x = x + LDRU[Object.keys(LDRU)[t]][i][0], y = y + LDRU[Object.keys(LDRU)[t]][i][1]) {
+							if(x === posX && y === posY) continue;
+							const masu = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
+							if(masu === null) break;
+							if(masu.children[0]) {
+								if(masu.children[0].classList.contains(Object.keys(LDRU)[0 + t])) break;
+							}
+							masu.classList.add($placeable);
+							if(masu.children[0]) {
+								if(masu.children[0].classList.contains(Object.keys(LDRU)[1 - t])) break;
+							}
+							if(!LDRU[Object.keys(LDRU)[0]][i][2]) break;
 						}
-						masu.classList.add($placeable);
-						if(masu.children[0]) break;
 					}
-					if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
-					if(!LDRU[t][2]) break;
 				}
 			}
 		}
+
+		// function komaMove(positionNumber: number, elem: undefined | Element, LDRU: number[][]): void {
+		// 	for(let t = 0; t < LDRU.length; t++) {
+		// 		const flag = LDRU[t][0] > 0 ? 1 : -1;
+		// 		if(elem !== undefined) {
+		// 			if(elem.classList.contains('ally') && LDRU[t][1] === 1) continue;
+		// 			if(elem.classList.contains('enemy') && LDRU[t][1] === -1) continue;	
+		// 		}
+		// 		for(let i = positionNumber; i * flag <= 44 + 55 * flag; i = i + LDRU[t][0]) {
+		// 			if(i === positionNumber) continue;
+		// 			let posX = Math.floor(i/10);
+		// 			let posY = Math.floor(i - Math.floor(i/10) * 10);
+		// 			let masu = document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`);
+		// 			if(masu !== null && elem !== undefined) {
+		// 				if(masu.children[0])
+		// 				{
+		// 					if((masu.children[0].classList.contains('ally')	&& elem.classList.contains('ally'))
+		// 					||(masu.children[0].classList.contains('enemy')) && elem.classList.contains('enemy')) break;
+		// 				}
+		// 				masu.classList.add($placeable);
+		// 				if(masu.children[0]) break;
+		// 			}
+		// 			if(document.querySelector(`.masu[data-x="${posX}"][data-y="${posY}"]`) === null) break;
+		// 			if(!LDRU[t][2]) break;
+		// 		}
+		// 	}
+		// }
 	}
 }
 
