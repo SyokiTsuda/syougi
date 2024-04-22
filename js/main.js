@@ -134,11 +134,13 @@
         const allyMotigoma = document.querySelector('.ally.motigomaArea');
         const enemyMotigoma = document.querySelector('.enemy.motigomaArea');
         const komaoto = document.querySelector('#komaoto');
+        const opponents = ['ally', 'enemy'];
+        let newOpponents;
+        let flag;
         let motigomaArea = null;
         let elem = undefined;
         let clickToPos = null;
-        let clickFromPos;
-        let flag = 0;
+        let clickFromPos = null;
         if (komaoto !== null)
             komaoto.volume = 1;
         komas.forEach(koma => {
@@ -152,51 +154,40 @@
                 else {
                     clickFromPos = koma.parentElement;
                 }
-                if (elem !== undefined) {
-                    if (elem !== koma) {
-                        // 敵駒クリック処理
-                        if (clickToPos === null || allyMotigoma === null || enemyMotigoma === null)
-                            return;
-                        if (clickToPos.classList.contains($placeable)) {
-                            if (koma.classList.contains('enemy')) {
+                if (elem !== undefined && elem !== koma) {
+                    // 敵駒クリック処理
+                    if (clickToPos === null)
+                        return;
+                    if (clickToPos.classList.contains($placeable)) {
+                        komaArrs.forEach(komaArr => {
+                            if (koma.classList.contains(komaArr[0])) {
+                                koma.classList.remove(komaArr[0]);
+                                koma.classList.add(komaArr[1]);
                             }
-                            if (koma.classList.contains('ally')) {
-                            }
-                            komaArrs.forEach(komaArr => {
-                                if (koma.classList.contains(komaArr[0])) {
-                                    koma.classList.remove(komaArr[0]);
-                                    koma.classList.add(komaArr[1]);
-                                }
-                            });
-                            if (koma.classList.contains('enemy')) {
-                                koma.classList.remove('enemy');
-                                koma.classList.add('ally');
-                                motigomaArea = document.querySelector('.ally.motigomaArea');
-                                if (motigomaArea !== null) {
-                                    motigomaArea.appendChild(koma);
-                                }
-                            }
-                            else if (koma.classList.contains('ally')) {
-                                koma.classList.remove('ally');
-                                koma.classList.add('enemy');
-                                motigomaArea = document.querySelector('.enemy.motigomaArea');
-                                if (motigomaArea !== null) {
-                                    motigomaArea.appendChild(koma);
-                                }
-                            }
-                            clickToPos.appendChild(elem);
-                            koma.classList.add('motigoma');
-                            koma.classList.add('tebann');
-                            if (clickFromPos === null)
+                        });
+                        toMotigoma(koma, 'ally', 'enemy');
+                        toMotigoma(koma, 'enemy', 'ally');
+                        function toMotigoma(element, classToRemove, classToAdd) {
+                            if (koma.classList.contains('tebann'))
                                 return;
-                            komanari(clickToPos, clickFromPos);
-                            insertKoma();
-                            changeTebann(komas);
-                            if (komaoto !== null) {
-                                komaoto.play();
+                            const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
+                            if (element.classList.contains(classToRemove) && motigomaArea !== null) {
+                                element.classList.remove(classToRemove);
+                                element.classList.add(classToAdd);
+                                koma.classList.add('tebann');
+                                motigomaArea.appendChild(element);
                             }
-                            removePlaceable();
                         }
+                        koma.classList.add('motigoma');
+                        clickToPos.appendChild(elem);
+                        if (clickFromPos === null)
+                            return;
+                        komanari(clickToPos, clickFromPos);
+                        insertKoma();
+                        changeTebann(komas);
+                        if (komaoto !== null)
+                            komaoto.play();
+                        removePlaceable();
                     }
                 }
                 removePlaceable();
@@ -228,30 +219,23 @@
                 return;
             if (!elem || clickToPosdParentNode.classList.contains($koma))
                 return;
-            if (!clickToPos.classList.contains($masu)) {
-                // マス目以外をクリック
-                removePlaceable();
-                elem.classList.remove($selected);
-                elem = undefined;
-            }
-            else {
-                // マス目をクリック
+            //マス目をクリック
+            if (clickToPos.classList.contains($masu)) {
                 if (clickFromPos === null)
                     return;
                 if (clickToPos.classList.contains($placeable)) {
                     clickToPos.appendChild(elem);
                     komanari(clickToPos, clickFromPos);
-                    elem.classList.remove('motigoma');
-                    if (komaoto !== null) {
+                    if (komaoto !== null)
                         komaoto.play();
-                    }
-                    insertKoma();
-                    removePlaceable();
+                    elem.classList.remove('motigoma');
                     changeTebann(komas);
-                    elem.classList.remove($selected);
-                    elem = undefined;
+                    insertKoma();
                 }
             }
+            elem.classList.remove($selected);
+            elem = undefined;
+            removePlaceable();
         });
         insertKoma();
         function changeTebann(komas) {
