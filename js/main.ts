@@ -147,13 +147,7 @@
 		const $masu: string = 'masu';
 		const komas: NodeListOf<Element> = document.querySelectorAll('.koma');
 		const masus: NodeListOf<Element> = document.querySelectorAll('.masu');
-		const allyMotigoma: null | Element = document.querySelector('.ally.motigomaArea');
-		const enemyMotigoma: null | Element = document.querySelector('.enemy.motigomaArea');
 		const komaoto: null | HTMLAudioElement = document.querySelector('#komaoto');
-		const opponents: string[] = ['ally', 'enemy'];
-		let newOpponents: string[];
-		let flag: number;
-		let motigomaArea: null | Element = null;
 		let elem: undefined | Element = undefined;
 		let clickToPos: null | Element = null;
 		let clickFromPos: null | Element = null;

@@ -131,13 +131,7 @@
         const $masu = 'masu';
         const komas = document.querySelectorAll('.koma');
         const masus = document.querySelectorAll('.masu');
-        const allyMotigoma = document.querySelector('.ally.motigomaArea');
-        const enemyMotigoma = document.querySelector('.enemy.motigomaArea');
         const komaoto = document.querySelector('#komaoto');
-        const opponents = ['ally', 'enemy'];
-        let newOpponents;
-        let flag;
-        let motigomaArea = null;
         let elem = undefined;
         let clickToPos = null;
         let clickFromPos = null;
