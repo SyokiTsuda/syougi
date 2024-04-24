@@ -144,66 +144,56 @@
             koma.addEventListener('click', () => {
                 if (elem !== undefined) {
                     clickToPos = koma.parentElement;
+                    // 敵駒クリック処理
+                    if (clickToPos !== null && clickFromPos !== null && elem !== koma) {
+                        if (clickToPos.classList.contains($placeable)) {
+                            komaArrs.forEach(komaArr => {
+                                if (koma.classList.contains(komaArr[0])) {
+                                    koma.classList.remove(komaArr[0]);
+                                    koma.classList.add(komaArr[1]);
+                                }
+                            });
+                            toMotigoma(koma, 'ally', 'enemy');
+                            toMotigoma(koma, 'enemy', 'ally');
+                            function toMotigoma(element, classToRemove, classToAdd) {
+                                if (koma.classList.contains('tebann'))
+                                    return;
+                                const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
+                                if (element.classList.contains(classToRemove) && motigomaArea !== null) {
+                                    element.classList.remove(classToRemove);
+                                    element.classList.add(classToAdd);
+                                    koma.classList.add('tebann');
+                                    motigomaArea.appendChild(element);
+                                }
+                            }
+                            koma.classList.add('motigoma');
+                            clickToPos.appendChild(elem);
+                            komanari(clickToPos, clickFromPos);
+                            insertKoma();
+                            changeTebann(komas);
+                            if (komaoto !== null)
+                                komaoto.play();
+                        }
+                    }
+                    removePlaceable();
+                    elem.classList.remove($selected);
+                    elem = undefined;
+                    return;
                 }
                 else {
-                    clickFromPos = koma.parentElement;
-                }
-                if (elem !== undefined && elem !== koma) {
-                    // 敵駒クリック処理
-                    if (clickToPos === null)
+                    if (!koma.classList.contains('tebann'))
                         return;
-                    if (clickToPos.classList.contains($placeable)) {
-                        komaArrs.forEach(komaArr => {
-                            if (koma.classList.contains(komaArr[0])) {
-                                koma.classList.remove(komaArr[0]);
-                                koma.classList.add(komaArr[1]);
-                            }
-                        });
-                        toMotigoma(koma, 'ally', 'enemy');
-                        toMotigoma(koma, 'enemy', 'ally');
-                        function toMotigoma(element, classToRemove, classToAdd) {
-                            if (koma.classList.contains('tebann'))
-                                return;
-                            const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
-                            if (element.classList.contains(classToRemove) && motigomaArea !== null) {
-                                element.classList.remove(classToRemove);
-                                element.classList.add(classToAdd);
-                                koma.classList.add('tebann');
-                                motigomaArea.appendChild(element);
-                            }
-                        }
-                        koma.classList.add('motigoma');
-                        clickToPos.appendChild(elem);
-                        if (clickFromPos === null)
-                            return;
-                        komanari(clickToPos, clickFromPos);
-                        insertKoma();
-                        changeTebann(komas);
-                        if (komaoto !== null)
-                            komaoto.play();
-                        removePlaceable();
-                    }
-                }
-                removePlaceable();
-                if (elem !== undefined) {
-                    if (elem.classList.contains($selected)) {
-                        elem.classList.remove($selected);
-                        elem = undefined;
+                    elem = koma;
+                    if (elem.parentElement === null)
                         return;
-                    }
+                    const posX = Number(elem.parentElement.getAttribute('data-x'));
+                    const posY = Number(elem.parentElement.getAttribute('data-y'));
+                    getMovablePosition(posX, posY);
+                    if (elem.classList.contains('motigoma'))
+                        uti();
+                    elem.classList.add($selected);
+                    clickFromPos = elem.parentElement;
                 }
-                if (!koma.classList.contains('tebann'))
-                    return;
-                elem = koma;
-                if (elem.parentElement === null)
-                    return;
-                const x = Number(elem.parentElement.getAttribute('data-x'));
-                const y = Number(elem.parentElement.getAttribute('data-y'));
-                test(x, y);
-                if (elem.classList.contains('motigoma')) {
-                    uti();
-                }
-                elem.classList.add($selected);
             });
         });
         document.addEventListener('click', e => {
@@ -258,7 +248,7 @@
                 masu.classList.remove($placeable);
             });
         }
-        function test(posX, posY) {
+        function getMovablePosition(posX, posY) {
             const LDRU = {
                 'hu': {
                     'ally': [[0, -1, false]],
