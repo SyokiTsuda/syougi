@@ -129,6 +129,8 @@
         const $placeable = 'placeable';
         const $koma = 'koma';
         const $masu = 'masu';
+        const $tebann = 'tebann';
+        const $motigoma = 'motigoma';
         const komas = document.querySelectorAll('.koma');
         const masus = document.querySelectorAll('.masu');
         const komaoto = document.querySelector('#komaoto');
@@ -139,7 +141,7 @@
             komaoto.volume = 1;
         komas.forEach(koma => {
             if (koma.classList.contains('ally')) {
-                koma.classList.add('tebann');
+                koma.classList.add($tebann);
             }
             koma.addEventListener('click', () => {
                 if (elem !== undefined) {
@@ -155,18 +157,7 @@
                             });
                             toMotigoma(koma, 'ally', 'enemy');
                             toMotigoma(koma, 'enemy', 'ally');
-                            function toMotigoma(element, classToRemove, classToAdd) {
-                                if (koma.classList.contains('tebann'))
-                                    return;
-                                const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
-                                if (element.classList.contains(classToRemove) && motigomaArea !== null) {
-                                    element.classList.remove(classToRemove);
-                                    element.classList.add(classToAdd);
-                                    koma.classList.add('tebann');
-                                    motigomaArea.appendChild(element);
-                                }
-                            }
-                            koma.classList.add('motigoma');
+                            koma.classList.add($motigoma);
                             clickToPos.appendChild(elem);
                             komanari(clickToPos, clickFromPos);
                             insertKoma();
@@ -175,13 +166,13 @@
                                 komaoto.play();
                         }
                     }
-                    removePlaceable();
+                    removePlaceable(masus);
                     elem.classList.remove($selected);
                     elem = undefined;
                     return;
                 }
                 else {
-                    if (!koma.classList.contains('tebann'))
+                    if (!koma.classList.contains($tebann))
                         return;
                     elem = koma;
                     if (elem.parentElement === null)
@@ -189,7 +180,7 @@
                     const posX = Number(elem.parentElement.getAttribute('data-x'));
                     const posY = Number(elem.parentElement.getAttribute('data-y'));
                     getMovablePosition(posX, posY);
-                    if (elem.classList.contains('motigoma'))
+                    if (elem.classList.contains($motigoma))
                         uti();
                     elem.classList.add($selected);
                     clickFromPos = elem.parentElement;
@@ -199,7 +190,7 @@
         document.addEventListener('click', e => {
             clickToPos = e.target;
             const clickToPosdParentNode = clickToPos.parentElement;
-            if (!clickToPosdParentNode)
+            if (clickToPosdParentNode === null)
                 return;
             if (!elem || clickToPosdParentNode.classList.contains($koma))
                 return;
@@ -212,19 +203,19 @@
                     komanari(clickToPos, clickFromPos);
                     if (komaoto !== null)
                         komaoto.play();
-                    elem.classList.remove('motigoma');
+                    elem.classList.remove($motigoma);
                     changeTebann(komas);
                     insertKoma();
                 }
             }
             elem.classList.remove($selected);
             elem = undefined;
-            removePlaceable();
+            removePlaceable(masus);
         });
         insertKoma();
         function changeTebann(komas) {
             komas.forEach(koma => {
-                koma.classList.toggle('tebann');
+                koma.classList.toggle($tebann);
             });
         }
         function insertKoma() {
@@ -243,7 +234,7 @@
                 });
             });
         }
-        function removePlaceable() {
+        function removePlaceable(masus) {
             masus.forEach(masu => {
                 masu.classList.remove($placeable);
             });
@@ -374,6 +365,17 @@
                     }
                 }
             });
+        }
+        function toMotigoma(element, classToRemove, classToAdd) {
+            if (element.classList.contains($tebann))
+                return;
+            const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
+            if (element.classList.contains(classToRemove) && motigomaArea !== null) {
+                element.classList.remove(classToRemove);
+                element.classList.add(classToAdd);
+                element.classList.add($tebann);
+                motigomaArea.appendChild(element);
+            }
         }
         function komanari(clickToPos, clickFromPos) {
             if (elem === undefined)

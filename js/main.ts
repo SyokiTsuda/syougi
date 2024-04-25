@@ -145,6 +145,8 @@
 		const $placeable: string = 'placeable';
 		const $koma: string = 'koma';
 		const $masu: string = 'masu';
+		const $tebann: string = 'tebann';
+		const $motigoma: string = 'motigoma';
 		const komas: NodeListOf<Element> = document.querySelectorAll('.koma');
 		const masus: NodeListOf<Element> = document.querySelectorAll('.masu');
 		const komaoto: null | HTMLAudioElement = document.querySelector('#komaoto');
@@ -156,7 +158,7 @@
 	
 		komas.forEach(koma => {
 			if(koma.classList.contains('ally')) {
-				koma.classList.add('tebann');
+				koma.classList.add($tebann);
 			}
 			koma.addEventListener('click', () => {
 				if(elem !== undefined) {
@@ -174,18 +176,7 @@
 							toMotigoma(koma, 'ally', 'enemy');
 							toMotigoma(koma, 'enemy', 'ally');
 							
-							function toMotigoma(element: Element, classToRemove: string, classToAdd: string) {
-								if(koma.classList.contains('tebann')) return;
-								const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
-								if (element.classList.contains(classToRemove) && motigomaArea !== null) {
-									element.classList.remove(classToRemove);
-									element.classList.add(classToAdd);
-									koma.classList.add('tebann');
-									motigomaArea.appendChild(element);
-								}
-							}
-							
-							koma.classList.add('motigoma');
+							koma.classList.add($motigoma);
 							clickToPos.appendChild(elem);
 							
 							komanari(clickToPos, clickFromPos);
@@ -194,18 +185,18 @@
 							if(komaoto !== null) komaoto.play();
 						}	
 					}
-					removePlaceable();
+					removePlaceable(masus);
 					elem.classList.remove($selected);
 					elem = undefined;
 					return;
 				}else {
-					if(!koma.classList.contains('tebann')) return;
+					if(!koma.classList.contains($tebann)) return;
 					elem = koma;
 					if(elem.parentElement === null) return;
 					const posX = Number(elem.parentElement.getAttribute('data-x'));
 					const posY = Number(elem.parentElement.getAttribute('data-y'));
 					getMovablePosition(posX, posY);
-					if(elem.classList.contains('motigoma')) uti();
+					if(elem.classList.contains($motigoma)) uti();
 					elem.classList.add($selected);
 					clickFromPos = elem.parentElement;
 				}
@@ -218,7 +209,7 @@
 
 			clickToPos = e.target as Element;
 			const clickToPosdParentNode = clickToPos.parentElement as Element;
-			if(!clickToPosdParentNode) return;
+			if(clickToPosdParentNode === null) return;
 	
 			if(!elem || clickToPosdParentNode.classList.contains($koma)) return;
 	
@@ -229,7 +220,7 @@
 					clickToPos.appendChild(elem);
 					komanari(clickToPos, clickFromPos);
 					if(komaoto !== null) komaoto.play();
-					elem.classList.remove('motigoma');
+					elem.classList.remove($motigoma);
 					changeTebann(komas);
 					insertKoma();
 				}
@@ -237,14 +228,14 @@
 			
 			elem.classList.remove($selected);
 			elem = undefined;
-			removePlaceable();
+			removePlaceable(masus);
 		});
 		
 		insertKoma();
 
 		function changeTebann(komas: NodeListOf<Element>): void {
 			komas.forEach(koma => {
-				koma.classList.toggle('tebann');
+				koma.classList.toggle($tebann);
 			});
 		}
 		
@@ -265,7 +256,7 @@
 			});
 		}
 		
-		function removePlaceable(): void {
+		function removePlaceable(masus: NodeListOf<Element>): void {
 			masus.forEach(masu => {
 				masu.classList.remove($placeable);
 			})
@@ -397,6 +388,17 @@
                     }
                 }
             });
+		}
+
+		function toMotigoma(element: Element, classToRemove: string, classToAdd: string) {
+			if(element.classList.contains($tebann)) return;
+			const motigomaArea = document.querySelector(`.${classToAdd}.motigomaArea`);
+			if (element.classList.contains(classToRemove) && motigomaArea !== null) {
+				element.classList.remove(classToRemove);
+				element.classList.add(classToAdd);
+				element.classList.add($tebann);
+				motigomaArea.appendChild(element);
+			}
 		}
 
 		function komanari(clickToPos: Element, clickFromPos: Element): void {
