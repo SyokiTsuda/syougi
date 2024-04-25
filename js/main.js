@@ -13,23 +13,9 @@
             gridCell += `</div>`;
             return gridCell;
         }
-        function createKoma(id, opponent, name) {
-            const div = document.createElement('div');
-            div.classList.add('koma');
-            div.classList.add(opponent);
-            div.classList.add(name);
-            div.setAttribute('data-id', `${id}`);
-            return div;
-        }
         const container = document.getElementById('container');
         if (container !== null) {
             container.innerHTML += createban();
-            function renderKoma(id, x, y, opponent, name) {
-                const targetElement = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
-                if (targetElement !== null) {
-                    targetElement.appendChild(createKoma(id, opponent, name));
-                }
-            }
             renderKoma(1, 5, 9, 'ally', 'gyoku');
             renderKoma(7, 6, 9, 'ally', 'kinn');
             renderKoma(8, 4, 9, 'ally', 'kinn');
@@ -213,6 +199,20 @@
             removePlaceable(masus);
         });
         insertKoma();
+        function createKoma(id, opponent, name) {
+            const div = document.createElement('div');
+            div.classList.add('koma');
+            div.classList.add(opponent);
+            div.classList.add(name);
+            div.setAttribute('data-id', `${id}`);
+            return div;
+        }
+        function renderKoma(id, x, y, opponent, name) {
+            const targetElement = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
+            if (targetElement !== null) {
+                targetElement.appendChild(createKoma(id, opponent, name));
+            }
+        }
         function changeTebann(komas) {
             komas.forEach(koma => {
                 koma.classList.toggle($tebann);
@@ -312,57 +312,40 @@
             });
         }
         function uti() {
-            const allyHus = [];
-            const enemyHus = [];
+            const utiArr = [
+                ['ally',
+                    [
+                        ['hu', 2, 1, []],
+                        ['kyou', 2, 1, []],
+                        ['kei', 3, 1, []],
+                    ]
+                ],
+                ['enemy',
+                    [
+                        ['hu', 8, -1, []],
+                        ['kyou', 8, -1, []],
+                        ['kei', 7, -1, []],
+                    ]
+                ],
+            ];
             komas.forEach(koma => {
-                if (koma.parentElement !== null) {
-                    if (koma.classList.contains('hu') && koma.classList.contains('ally')) {
-                        const posX = Number(koma.parentElement.getAttribute('data-x'));
-                        allyHus.push(posX);
+                utiArr.forEach((e) => {
+                    if (koma.classList.contains(e[0]) && koma.classList.contains(e[1][0][0])) {
+                        if (koma.parentElement !== null) {
+                            if (!koma.classList.contains($motigoma)) {
+                                const posX = Number(koma.parentElement.getAttribute('data-x'));
+                                e[1][0][3].push(posX);
+                            }
+                        }
                     }
-                    else if (koma.classList.contains('hu') && koma.classList.contains('enemy')) {
-                        const posX = Number(koma.parentElement.getAttribute('data-x'));
-                        enemyHus.push(posX);
-                    }
-                }
+                });
             });
             masus.forEach(masu => {
                 if (masu.children[0] === undefined && elem !== undefined) {
+                    masu.classList.add($placeable);
                     const posY = Number(masu.getAttribute('data-y'));
                     const posX = Number(masu.getAttribute('data-x'));
-                    if (elem.classList.contains('hu') && elem.classList.contains('ally')) {
-                        if (posY !== 1 && allyHus.indexOf(posX) === -1) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else if (elem.classList.contains('hu') && elem.classList.contains('enemy')) {
-                        if (posY !== 9 && enemyHus.indexOf(posX) === -1) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else if (elem.classList.contains('kyou') && elem.classList.contains('ally')) {
-                        if (posY !== 1) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else if (elem.classList.contains('kyou') && elem.classList.contains('enemy')) {
-                        if (posY !== 9) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else if (elem.classList.contains('kei') && elem.classList.contains('ally')) {
-                        if (posY > 2) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else if (elem.classList.contains('kei') && elem.classList.contains('enemy')) {
-                        if (posY < 8) {
-                            masu.classList.add($placeable);
-                        }
-                    }
-                    else {
-                        masu.classList.add($placeable);
-                    }
+                    getUtiablePos(elem, masu, utiArr, posY, posX);
                 }
             });
         }
@@ -376,6 +359,22 @@
                 element.classList.add($tebann);
                 motigomaArea.appendChild(element);
             }
+        }
+        function getUtiablePos(elem, masu, utiArr, posY, posX) {
+            utiArr.forEach((es) => {
+                es[1].forEach((e) => {
+                    if (elem !== undefined) {
+                        if (elem.classList.contains(es[0]) && elem.classList.contains(e[0])) {
+                            if (!(posY * e[2] >= e[1] * e[2])) {
+                                masu.classList.remove($placeable);
+                            }
+                            if (e[0] === 'hu' && e[3].indexOf(posX) !== -1) {
+                                masu.classList.remove($placeable);
+                            }
+                        }
+                    }
+                });
+            });
         }
         function komanari(clickToPos, clickFromPos) {
             if (elem === undefined)
