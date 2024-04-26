@@ -16,15 +16,10 @@
 			return gridCell;
 		}
 		
-		
-		
-		
 		const container: null | Element = document.getElementById('container');
 
 		if(container !== null) {
 			container.innerHTML += createban();
-
-			
 
 			renderKoma(1, 5, 9, 'ally', 'gyoku');
 			renderKoma(7, 6, 9, 'ally', 'kinn');
@@ -412,136 +407,69 @@
 		const nariKomas: any = [
 			['ally',
 				[
-					['hu', 1, [[2, 3],[2, 4],[2, 3],[2, 4]],[[1, 1],[2, 2],[1, 1],[2, 2]]],
-					['kyou', 1, [[2, 3],[2, 9],[2, 3],[2, 9]],[[1, 1],[1, 9],[1, 1],[1, 9]]],
-					['kei', 1, [[3, 3],[5, 5],[3, 3],[5, 5]],[[1, 2],[3, 4],[1, 2],[3, 4]]],
-					['ginn', 1, [[1, 3],[1, 4],[1, 4],[1, 3]],null],
-					['kaku', 1, [1, 3],[1, 9],[1, 9],[1, 3],null],
-					['hisya', 1, [1, 3],[1, 9],[1, 9],[1, 3],null],					
+					['hu','tokinn', 1, [[2, 3],[2, 4],[2, 3],[2, 4]],[[1, 1],[2, 2],[1, 1],[2, 2]],true],
+					['kyou','narikyou', 1, [[2, 3],[2, 9],[2, 3],[2, 9]],[[1, 1],[1, 9],[1, 1],[1, 9]],true],
+					['kei','narikei', 1, [[3, 3],[5, 5],[3, 3],[5, 5]],[[1, 2],[3, 4],[1, 2],[3, 4]],true],
+					['ginn','nariginn', 1, [[1, 3],[1, 4],[1, 4],[1, 3]],[[1, 3],[1, 4],[1, 4],[1, 3]],false],
+					['kaku','uma', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],
+					['hisya','ryuu', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],					
 				]
 			],
 			['enemy',
 				[
-					['hu', -1, [[8, 7],[8, 6],[8, 7],[8, 6]],[[9, 9],[8, 8],[9, 9],[8, 8]]],
-					['kyou', -1, [[8, 7],[8, 1],[8, 7],[8, 1]],[[9, 9],[9, 1],[9, 9],[9, 1]]],
-					['kei', -1, [[7, 7],[5, 5],[7, 7],[5, 5]],[[9, 8],[7, 6],[9, 8],[7, 6]]],
-					['ginn', -1, [[9, 7],[9, 6],[9, 6],[9, 7]],null],
-					['kaku', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],null],
-					['hisya', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],null],
+					['hu','tokinn', -1, [[8, 7],[8, 6],[8, 7],[8, 6]],[[9, 9],[8, 8],[9, 9],[8, 8]],true],
+					['kyou','narikyou', -1, [[8, 7],[8, 1],[8, 7],[8, 1]],[[9, 9],[9, 1],[9, 9],[9, 1]],true],
+					['kei','narikei', -1, [[7, 7],[5, 5],[7, 7],[5, 5]],[[9, 8],[7, 6],[9, 8],[7, 6]],true],
+					['ginn','nariginn', -1, [[9, 7],[9, 6],[9, 6],[9, 7]],[[9, 7],[9, 6],[9, 6],[9, 7]],false],
+					['kaku','uma', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
+					['hisya','ryuu', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
 				]
 			]
-		]
+		];
 
 		function komanari(clickToPos: Element, clickFromPos: Element): void {
 			if(elem === undefined) return;
 			if(elem.classList.contains('motigoma')) return;
 			const clickToPos_y = Number(clickToPos.getAttribute('data-y'));
 			const clickFromPos_y = Number(clickFromPos.getAttribute('data-y'));
-			// nariKomas.forEach((komas: any) => {
-			// 	for(let t = 0; komas[1].length; t++) {
-			// 		if(elem !== undefined) {
-			// 			if(elem.classList.contains(komas[1][t][0])) {
-			// 				for(let i = 0; i < 4; i++) {
-			// 					if((((clickToPos_y * komas[1][t][1] >= komas[1][t][2][0][0] * komas[1][t][1] 
-			// 						&& clickToPos_y * komas[1][t][1] <= komas[1][t][2][0][1] * komas[1][t][1]) 
-			// 						&& (clickFromPos_y * komas[1][t][1] >= komas[1][t][2][1][0] * komas[1][t][1] 
-			// 						&& clickFromPos_y * komas[1][t][1] <= komas[1][t][2][1][1] * komas[1][t][1]))
+			nariKomas.forEach((komas: any) => {
+				for(let i = 0; i < komas[1].length; i++) {
+					if(elem !== undefined) {
+						if(elem.classList.contains(komas[1][i][0])) {
+							if(((((clickToPos_y * komas[1][i][2] >= komas[1][i][3][0][0] * komas[1][i][2] 
+							&& clickToPos_y * komas[1][i][2] <= komas[1][i][3][0][1] * komas[1][i][2]) 
+							&& (clickFromPos_y * komas[1][i][2] >= komas[1][i][3][1][0] * komas[1][i][2] 
+							&& clickFromPos_y * komas[1][i][2] <= komas[1][i][3][1][1] * komas[1][i][2]))
 
-			// 					|| ((clickToPos_y * komas[1][t][1] >= komas[1][t][2][2][0] * komas[1][t][1] 
+							|| ((clickToPos_y * komas[1][i][2] >= komas[1][i][3][2][0] * komas[1][i][2] 
+							&& clickToPos_y * komas[1][i][2] <= komas[1][i][3][2][1] * komas[1][i][2]) 
+							&& (clickFromPos_y * komas[1][i][2] >= komas[1][i][3][3][0] * komas[1][i][2] 
+							&& clickFromPos_y * komas[1][i][2] <= komas[1][i][3][3][1] * komas[1][i][2])))
 
-			// 						&& clickToPos_y * komas[1][t][1] <= komas[1][t][2][2][1] * komas[1][t][1]) 
-			// 						&& (clickFromPos_y * komas[1][t][1] >= komas[1][t][2][3][0] * komas[1][t][1] 
-			// 						&& clickFromPos_y * komas[1][t][1] <= komas[1][t][2][3][1] * komas[1][t][1]))) 
+							&& elem.classList.contains(komas[0]) 
+							&& clickToPos.classList.contains($placeable))) {
+								if(!confirm('成りますか?')) return;
+								elem.classList.remove(komas[1][i][0]);
+								elem.classList.add(komas[1][i][1]);
+							}else if(((((clickToPos_y * komas[1][i][2] >= komas[1][i][4][0][0] * komas[1][i][2] 
+							&& clickToPos_y * komas[1][i][2] <= komas[1][i][4][0][1] * komas[1][i][2]) 
+							&& (clickFromPos_y * komas[1][i][2] >= komas[1][i][4][1][0] * komas[1][i][2] 
+							&& clickFromPos_y * komas[1][i][2] <= komas[1][i][4][1][1] * komas[1][i][2]) && komas[1][i][5])
 
-			// 						&& elem.classList.contains('ally') 
-			// 						&& clickToPos.classList.contains($placeable))
-			// 					{
-
-			// 					}
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// });
-			if(elem.classList.contains('hu')) {
-				if((((clickToPos_y * (1) >= 2 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 4 * (1))) || ((clickToPos_y * (1) >= 2 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 4 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('hu');
-					elem.classList.add('tokinn');
-				}if((((clickToPos_y * (1) >=  1 * (1) && clickToPos_y * (1) <= 1 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 2 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 1 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 2 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('hu');
-					elem.classList.add('tokinn');
-				}if((((clickToPos_y * (-1) >= 8 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 6 * (-1))) || ((clickToPos_y * (-1) >= 8 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 6 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('hu');
-					elem.classList.add('tokinn');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 9 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 8 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <=9 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 8 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('hu');
-					elem.classList.add('tokinn');
+							|| ((clickToPos_y * komas[1][i][2] >= komas[1][i][4][2][0] * komas[1][i][2] 
+							&& clickToPos_y * komas[1][i][2] <= komas[1][i][4][2][1] * komas[1][i][2]) 
+							&& (clickFromPos_y * komas[1][i][2] >= komas[1][i][4][3][0] * komas[1][i][2] 
+							&& clickFromPos_y * komas[1][i][2] <= komas[1][i][4][3][1] * komas[1][i][2])) && komas[1][i][5])
+						
+							&& elem.classList.contains(komas[0]) 
+							&& clickToPos.classList.contains($placeable))) {
+								elem.classList.remove(komas[1][i][0]);
+								elem.classList.add(komas[1][i][1]);
+							}
+						}
+					}
 				}
-			}if(elem.classList.contains('kyou')) {
-				if((((clickToPos_y * (1) >= 2 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 9 * (1))) || ((clickToPos_y * (1) >= 2 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 9 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kyou');
-					elem.classList.add('narikyou');
-				}if((((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 1 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 9 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 1 * (1)) && (clickFromPos_y * (1) >= 2 * (1) && clickFromPos_y * (1) <= 9 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('kyou');
-					elem.classList.add('narikyou');
-				}if((((clickToPos_y * (-1) >= 8 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 1 * (-1))) || ((clickToPos_y * (-1) >= 8 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 1 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kyou');
-					elem.classList.add('narikyou');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 9 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 1 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <=9 * (-1)) && (clickFromPos_y * (-1) >= 8 * (-1) && clickFromPos_y * (-1) <= 1 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('kyou');
-					elem.classList.add('narikyou');
-				}
-			}if(elem.classList.contains('kei')) {
-				if((((clickToPos_y * (1) >= 3 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 5 * (1) && clickFromPos_y * (1) <= 5 * (1))) || ((clickToPos_y * (1) >= 3 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 5 * (1) && clickFromPos_y * (1) <= 5 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kei');
-					elem.classList.add('narikei');
-				}if((((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 2 * (1)) && (clickFromPos_y * (1) >= 3 * (1) && clickFromPos_y * (1) <= 4 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 2 * (1)) && (clickFromPos_y * (1) >= 3 * (1) && clickFromPos_y * (1) <= 4 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('kei');
-					elem.classList.add('narikei');
-				}if((((clickToPos_y * (-1) >= 7 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 5 * (-1) && clickFromPos_y * (-1) <= 5 * (-1))) || ((clickToPos_y * (-1) >= 7 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 5 * (-1) && clickFromPos_y * (-1) <= 5 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kei');
-					elem.classList.add('narikei');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 8 * (-1)) && (clickFromPos_y * (-1) >= 7 * (-1) && clickFromPos_y * (-1) <= 6 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 8 * (-1)) && (clickFromPos_y * (-1) >= 7 * (-1) && clickFromPos_y * (-1) <= 6 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					elem.classList.remove('kei');
-					elem.classList.add('narikei');
-				}
-			}if(elem.classList.contains('ginn')) {
-				if((((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 4 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 4 * (1)) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 3 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('ginn');
-					elem.classList.add('nariginn');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 6 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 6 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 7 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('ginn');
-					elem.classList.add('nariginn');
-				}
-			}if(elem.classList.contains('kaku')) {
-				if((((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 9 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 9 * (1)) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 3 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kaku');
-					elem.classList.add('uma');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 1 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 1 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 7 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('kaku');
-					elem.classList.add('uma');
-				}
-			}if(elem.classList.contains('hisya')) {
-				if((((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 3 * (1)) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 9 * (1))) || ((clickToPos_y * (1) >= 1 * (1) && clickToPos_y * (1) <= 9) && (clickFromPos_y * (1) >= 1 * (1) && clickFromPos_y * (1) <= 3 * (1)))) && elem.classList.contains('ally') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('hisya');
-					elem.classList.add('ryuu');
-				}if((((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 7 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 1 * (-1))) || ((clickToPos_y * (-1) >= 9 * (-1) && clickToPos_y * (-1) <= 1 * (-1)) && (clickFromPos_y * (-1) >= 9 * (-1) && clickFromPos_y * (-1) <= 7 * (-1)))) && elem.classList.contains('enemy') && clickToPos.classList.contains($placeable)) {
-					if(!confirm('成りますか?')) return;
-					elem.classList.remove('hisya');
-					elem.classList.add('ryuu');
-				}
-			}
+			});
 		}
 
 		function komaMove(posX: number, posY: number, elem: Element, LDRU: any) {
