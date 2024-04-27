@@ -169,7 +169,7 @@
 							
 							koma.classList.add($motigoma);
 							clickToPos.appendChild(elem);
-							
+							sortMotigoma();
 							komanari(clickToPos, clickFromPos);
 							// 現在の駒位置のデータベースを挿入
 							insertKoma();
@@ -225,6 +225,7 @@
 		});
 		
 		// 現在の駒位置のデータベースを挿入
+		sortMotigoma();
 		insertKoma();
 
 		function createban(): string {
@@ -275,6 +276,20 @@
 							}
 						});
 					}
+				});
+			});
+		}
+		
+		function sortMotigoma(): void {
+			console.log('test')
+			const motigomaAreas: null | NodeListOf<Element> = document.querySelectorAll('.motigomaArea');
+			motigomaAreas.forEach((motigomaArea: Element) => {
+				const children = Array.from(motigomaArea.children);
+				children.sort((a: Element, b: Element) => {
+					return Number(a.getAttribute('data-id')) - Number(b.getAttribute('data-id'));
+				});
+				children.forEach(child => {
+					motigomaArea.appendChild(child);
 				});
 			});
 		}

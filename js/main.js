@@ -158,6 +158,7 @@
                             toMotigoma(koma, 'enemy', 'ally');
                             koma.classList.add($motigoma);
                             clickToPos.appendChild(elem);
+                            sortMotigoma();
                             komanari(clickToPos, clickFromPos);
                             // 現在の駒位置のデータベースを挿入
                             insertKoma();
@@ -214,6 +215,7 @@
             removePlaceable(masus);
         });
         // 現在の駒位置のデータベースを挿入
+        sortMotigoma();
         insertKoma();
         function createban() {
             let gridCell = `<div class="ban">`;
@@ -259,6 +261,19 @@
                             }
                         });
                     }
+                });
+            });
+        }
+        function sortMotigoma() {
+            console.log('test');
+            const motigomaAreas = document.querySelectorAll('.motigomaArea');
+            motigomaAreas.forEach((motigomaArea) => {
+                const children = Array.from(motigomaArea.children);
+                children.sort((a, b) => {
+                    return Number(a.getAttribute('data-id')) - Number(b.getAttribute('data-id'));
+                });
+                children.forEach(child => {
+                    motigomaArea.appendChild(child);
                 });
             });
         }
