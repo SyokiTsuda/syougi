@@ -2,20 +2,7 @@
 
 {
 	if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-		
-		function createban(): string{
-			let gridCell: string = `<div class="ban">`;
-			for(let i=1; i<=9; i++) {
-				gridCell += `<div class="paragraph">`;
-				for(let t=9; t>=1; t--) {
-					gridCell += `<div class="masu" data-x="${t}" data-y="${i}"></div>`;
-				}
-				gridCell += `</div>`;
-			}
-			gridCell += `</div>`
-			return gridCell;
-		}
-		
+			
 		const container: null | Element = document.getElementById('container');
 
 		if(container !== null) {
@@ -81,48 +68,87 @@
 			['gyoku','gyoku'],
 		];
 
-		const testkomaArrs: any = 
-		{
-			'ally': 
-			[
-				['ou', 'syougi_koma01_z_01.png'],
-				['kaku', 'syougi_koma01_z_02.png'],
-				['uma', 'syougi_koma01_z_03.png'],
-				['hisya', 'syougi_koma01_z_04.png'],
-				['ryuu', 'syougi_koma01_z_05.png'],
-				['kinn', 'syougi_koma01_z_06.png'],
-				['ginn', 'syougi_koma01_z_07.png'],
-				['nariginn', 'syougi_koma01_z_08.png'],
-				['kei', 'syougi_koma01_z_09.png'],
-				['narikei', 'syougi_koma01_z_10.png'],
-				['kyou', 'syougi_koma01_z_11.png'],
-				['narikyou', 'syougi_koma01_z_12.png'],
-				['hu', 'syougi_koma01_z_13.png'],
-				['tokinn', 'syougi_koma01_z_14.png'],
-				['gyoku', 'syougi_koma01_z_15.png'],
+		const komasImages: any = [
+			['ally', 
+				[
+					['ou', 'syougi_koma01_z_01.png'],
+					['kaku', 'syougi_koma01_z_02.png'],
+					['uma', 'syougi_koma01_z_03.png'],
+					['hisya', 'syougi_koma01_z_04.png'],
+					['ryuu', 'syougi_koma01_z_05.png'],
+					['kinn', 'syougi_koma01_z_06.png'],
+					['ginn', 'syougi_koma01_z_07.png'],
+					['nariginn', 'syougi_koma01_z_08.png'],
+					['kei', 'syougi_koma01_z_09.png'],
+					['narikei', 'syougi_koma01_z_10.png'],
+					['kyou', 'syougi_koma01_z_11.png'],
+					['narikyou', 'syougi_koma01_z_12.png'],
+					['hu', 'syougi_koma01_z_13.png'],
+					['tokinn', 'syougi_koma01_z_14.png'],
+					['gyoku', 'syougi_koma01_z_15.png'],
+				],
 			],
-
-			'enemy':
-			[
-				['ou', 'Gsyougi_koma01_z_01.png'],
-				['kaku', 'Gsyougi_koma01_z_02.png'],
-				['uma', 'Gsyougi_koma01_z_03.png'],
-				['hisya', 'Gsyougi_koma01_z_04.png'],
-				['ryuu', 'Gsyougi_koma01_z_05.png'],
-				['kinn', 'Gsyougi_koma01_z_06.png'],
-				['ginn', 'Gsyougi_koma01_z_07.png'],
-				['nariginn', 'Gsyougi_koma01_z_08.png'],
-				['kei', 'Gsyougi_koma01_z_09.png'],
-				['narikei', 'Gsyougi_koma01_z_10.png'],
-				['kyou', 'Gsyougi_koma01_z_11.png'],
-				['narikyou', 'Gsyougi_koma01_z_12.png'],
-				['hu', 'Gsyougi_koma01_z_13.png'],
-				['tokinn', 'Gsyougi_koma01_z_14.png'],
-				['gyoku', 'Gsyougi_koma01_z_15.png'],
+			['enemy',
+				[
+					['ou', 'Gsyougi_koma01_z_01.png'],
+					['kaku', 'Gsyougi_koma01_z_02.png'],
+					['uma', 'Gsyougi_koma01_z_03.png'],
+					['hisya', 'Gsyougi_koma01_z_04.png'],
+					['ryuu', 'Gsyougi_koma01_z_05.png'],
+					['kinn', 'Gsyougi_koma01_z_06.png'],
+					['ginn', 'Gsyougi_koma01_z_07.png'],
+					['nariginn', 'Gsyougi_koma01_z_08.png'],
+					['kei', 'Gsyougi_koma01_z_09.png'],
+					['narikei', 'Gsyougi_koma01_z_10.png'],
+					['kyou', 'Gsyougi_koma01_z_11.png'],
+					['narikyou', 'Gsyougi_koma01_z_12.png'],
+					['hu', 'Gsyougi_koma01_z_13.png'],
+					['tokinn', 'Gsyougi_koma01_z_14.png'],
+					['gyoku', 'Gsyougi_koma01_z_15.png'],
+				]
 			]
-		};
+		];
 
-		const testKomas: any = Object.entries(testkomaArrs);
+		const utiArr: any = [
+			['ally',
+				[
+					['hu', 2, 1, []],
+					['kyou', 2, 1, []],
+					['kei', 3, 1, []],
+				]
+			],
+			['enemy',
+				[
+					['hu', 8, -1, []],
+					['kyou', 8, -1, []],
+					['kei', 7, -1, []],
+				]
+			],
+		];
+
+		const nariKomas: any = [
+			['ally',
+				[
+					['hu','tokinn', 1, [[2, 3],[2, 4],[2, 3],[2, 4]],[[1, 1],[2, 2],[1, 1],[2, 2]],true],
+					['kyou','narikyou', 1, [[2, 3],[2, 9],[2, 3],[2, 9]],[[1, 1],[1, 9],[1, 1],[1, 9]],true],
+					['kei','narikei', 1, [[3, 3],[5, 5],[3, 3],[5, 5]],[[1, 2],[3, 4],[1, 2],[3, 4]],true],
+					['ginn','nariginn', 1, [[1, 3],[1, 4],[1, 4],[1, 3]],[[1, 3],[1, 4],[1, 4],[1, 3]],false],
+					['kaku','uma', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],
+					['hisya','ryuu', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],					
+				]
+			],
+			['enemy',
+				[
+					['hu','tokinn', -1, [[8, 7],[8, 6],[8, 7],[8, 6]],[[9, 9],[8, 8],[9, 9],[8, 8]],true],
+					['kyou','narikyou', -1, [[8, 7],[8, 1],[8, 7],[8, 1]],[[9, 9],[9, 1],[9, 9],[9, 1]],true],
+					['kei','narikei', -1, [[7, 7],[5, 5],[7, 7],[5, 5]],[[9, 8],[7, 6],[9, 8],[7, 6]],true],
+					['ginn','nariginn', -1, [[9, 7],[9, 6],[9, 6],[9, 7]],[[9, 7],[9, 6],[9, 6],[9, 7]],false],
+					['kaku','uma', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
+					['hisya','ryuu', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
+				]
+			]
+		];
+
 		const $selected: string = 'selected';
 		const $placeable: string = 'placeable';
 		const $koma: string = 'koma';
@@ -178,7 +204,7 @@
 					const posX = Number(elem.parentElement.getAttribute('data-x'));
 					const posY = Number(elem.parentElement.getAttribute('data-y'));
 					getMovablePosition(posX, posY);
-					if(elem.classList.contains($motigoma)) uti();
+					if(elem.classList.contains($motigoma)) uti(utiArr);
 					elem.classList.add($selected);
 					clickFromPos = elem.parentElement;
 				}
@@ -215,6 +241,18 @@
 		
 		insertKoma();
 
+		function createban(): string {
+			let gridCell: string = `<div class="ban">`;
+			for(let i=1; i<=9; i++) {
+				gridCell += `<div class="paragraph">`;
+				for(let t=9; t>=1; t--) {
+					gridCell += `<div class="masu" data-x="${t}" data-y="${i}"></div>`;
+				}
+				gridCell += `</div>`;
+			}
+			gridCell += `</div>`
+			return gridCell;
+		}
 
 		function createKoma(id:number, opponent: string, name: string): Element {
 			const div = document.createElement('div');
@@ -225,8 +263,7 @@
 			return div;
 		}
 
-		function renderKoma(id: number, x: number, y: number, opponent: string, name: string): void {
-			
+		function renderKoma(id: number, x: number, y: number, opponent: string, name: string): void {	
 			const targetElement: null | Element = document.querySelector(`.masu[data-x="${x}"][data-y="${y}"]`);
 			if(targetElement !== null) {
 				targetElement.appendChild(createKoma(id, opponent, name));
@@ -242,7 +279,7 @@
 		function insertKoma() {
 			komas.forEach(koma => {
 				koma.innerHTML = '';
-				testKomas.forEach((testKoma: any) => {
+				komasImages.forEach((testKoma: any) => {
 					if(koma.classList.contains(testKoma[0])) {
 						testKoma[1].forEach((e: any) => {
 							if(koma.classList.contains(e[0])) {
@@ -336,23 +373,7 @@
 			});
 		}
 
-		function uti(): void {
-			const utiArr: any = [
-				['ally',
-					[
-						['hu', 2, 1, []],
-						['kyou', 2, 1, []],
-						['kei', 3, 1, []],
-					]
-				],
-				['enemy',
-					[
-						['hu', 8, -1, []],
-						['kyou', 8, -1, []],
-						['kei', 7, -1, []],
-					]
-				],
-			];
+		function uti(utiArr: any): void {
             komas.forEach(koma => {
 				utiArr.forEach((e: any) => {
 					if(koma.classList.contains(e[0]) && koma.classList.contains(e[1][0][0])) {
@@ -403,29 +424,6 @@
 				});
 			})
 		}
-
-		const nariKomas: any = [
-			['ally',
-				[
-					['hu','tokinn', 1, [[2, 3],[2, 4],[2, 3],[2, 4]],[[1, 1],[2, 2],[1, 1],[2, 2]],true],
-					['kyou','narikyou', 1, [[2, 3],[2, 9],[2, 3],[2, 9]],[[1, 1],[1, 9],[1, 1],[1, 9]],true],
-					['kei','narikei', 1, [[3, 3],[5, 5],[3, 3],[5, 5]],[[1, 2],[3, 4],[1, 2],[3, 4]],true],
-					['ginn','nariginn', 1, [[1, 3],[1, 4],[1, 4],[1, 3]],[[1, 3],[1, 4],[1, 4],[1, 3]],false],
-					['kaku','uma', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],
-					['hisya','ryuu', 1, [[1, 3],[1, 9],[1, 9],[1, 3]],[[1, 3],[1, 9],[1, 9],[1, 3]],false],					
-				]
-			],
-			['enemy',
-				[
-					['hu','tokinn', -1, [[8, 7],[8, 6],[8, 7],[8, 6]],[[9, 9],[8, 8],[9, 9],[8, 8]],true],
-					['kyou','narikyou', -1, [[8, 7],[8, 1],[8, 7],[8, 1]],[[9, 9],[9, 1],[9, 9],[9, 1]],true],
-					['kei','narikei', -1, [[7, 7],[5, 5],[7, 7],[5, 5]],[[9, 8],[7, 6],[9, 8],[7, 6]],true],
-					['ginn','nariginn', -1, [[9, 7],[9, 6],[9, 6],[9, 7]],[[9, 7],[9, 6],[9, 6],[9, 7]],false],
-					['kaku','uma', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
-					['hisya','ryuu', -1, [[9, 7],[9, 1],[9, 1],[9, 7]],[[9, 7],[9, 1],[9, 1],[9, 7]],false],
-				]
-			]
-		];
 
 		function komanari(clickToPos: Element, clickFromPos: Element): void {
 			if(elem === undefined) return;
