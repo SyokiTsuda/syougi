@@ -1,66 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width" >
 <link rel="shortcut icon" href="../images/favicon.ico">
-<link rel="stylesheet" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-<title>王様が取られても続く一人将棋</title>
+<title>将棋アプリ</title>
 </head>
 <body>
+	
+	<div class="enemy motigomaArea"></div>
+	<div id="container"></div>
+	<div class="ally motigomaArea"></div>
 
-<div id="settei">
-<input type="button" class="button" id="btn3" value="元の状態に戻す" onclick="yarinaosi()">
-<input type="button" class="button" id="btn1" value="移動先表示">
+	<audio id="komaoto">
+	<source src="komaoto/komaoto2.mp3" type="audio/mp3"></source>
+	</audio>
+	<audio id="matigai">
+	<source src="komaoto/cancel2.mp3" type="audio/mp3"></source>
+	</audio>
 
-</div>
-
-<div class="motigoma motigoma2">
-	<div class="hu2"><span></span></div>
-	<div class="kyou2"><span></span></div>
-	<div class="kei2"><span></span></div>
-	<div class="ginn2"><span></span></div>
-	<div class="kinn2"><span></span></div>
-	<div class="kaku2"><span></span></div>
-	<div class="hisya2"><span></span></div>
-	<div class="gyoku2"><span></span></div>
-</div>
-
-<div id="container">
-</div><!-- #container-->
-
-
-
-<div class="motigoma motigoma1">
-	<div class="hu1"><span></span></div>
-	<div class="kyou1"><span></span></div>
-	<div class="kei1"><span></span></div>
-	<div class="ginn1"><span></span></div>
-	<div class="kinn1"><span></span></div>
-	<div class="kaku1"><span></span></div>
-	<div class="hisya1"><span></span></div>
-	<div class="gyoku1"><span></span></div>
-</div>
-
-<audio id="komaoto">
-   <source src="komaoto/komaoto2.mp3" type="audio/mp3"></source>
-</audio>
-
-<audio id="matigai">
-   <source src="komaoto/cancel2.mp3" type="audio/mp3"></source>
-</audio>
-
-
-
-<script src="js/hint.js"></script>
-<script src="js/create.js"></script>
-<script>
-var getmasume1 = createban1(1,1);
-$('#container').append(getmasume1);
-</script>
-<script src="js/ugoki.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>
