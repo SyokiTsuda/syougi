@@ -102,22 +102,6 @@
                 ]
             ]
         ];
-        const utiArr = [
-            ['ally',
-                [
-                    ['hu', 2, 1, []],
-                    ['kyou', 2, 1, []],
-                    ['kei', 3, 1, []],
-                ]
-            ],
-            ['enemy',
-                [
-                    ['hu', 8, -1, []],
-                    ['kyou', 8, -1, []],
-                    ['kei', 7, -1, []],
-                ]
-            ],
-        ];
         const nariKomas = [
             ['ally',
                 [
@@ -175,6 +159,7 @@
                             koma.classList.add($motigoma);
                             clickToPos.appendChild(elem);
                             komanari(clickToPos, clickFromPos);
+                            // 現在の駒位置のデータベースを挿入
                             insertKoma();
                             changeTebann(komas);
                             if (komaoto !== null)
@@ -196,7 +181,7 @@
                     const posY = Number(elem.parentElement.getAttribute('data-y'));
                     getMovablePosition(posX, posY);
                     if (elem.classList.contains($motigoma))
-                        uti(utiArr);
+                        uti();
                     elem.classList.add($selected);
                     clickFromPos = elem.parentElement;
                 }
@@ -220,6 +205,7 @@
                         komaoto.play();
                     elem.classList.remove($motigoma);
                     changeTebann(komas);
+                    // 現在の駒位置のデータベースを挿入
                     insertKoma();
                 }
             }
@@ -227,6 +213,7 @@
             elem = undefined;
             removePlaceable(masus);
         });
+        // 現在の駒位置のデータベースを挿入
         insertKoma();
         function createban() {
             let gridCell = `<div class="ban">`;
@@ -352,7 +339,23 @@
                 }
             });
         }
-        function uti(utiArr) {
+        function uti() {
+            const utiArr = [
+                ['ally',
+                    [
+                        ['hu', 2, 1, []],
+                        ['kyou', 2, 1, []],
+                        ['kei', 3, 1, []],
+                    ]
+                ],
+                ['enemy',
+                    [
+                        ['hu', 8, -1, []],
+                        ['kyou', 8, -1, []],
+                        ['kei', 7, -1, []],
+                    ]
+                ],
+            ];
             komas.forEach(koma => {
                 utiArr.forEach((e) => {
                     if (koma.classList.contains(e[0]) && koma.classList.contains(e[1][0][0])) {
